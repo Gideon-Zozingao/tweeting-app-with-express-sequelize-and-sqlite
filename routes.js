@@ -5,20 +5,20 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
 const {Sequelize,Op}=require("sequelize");
+
 //home route
 router.get('/',(req,res)=>{
-
-  res.render('pages/index',{title:"Twit Clone App>>Home"});
+  res.render('pages/index',{title:"Tweeting  App>>Home"});
 })
 
 
 router.get("/register",(req,res)=>{
-res.render('pages/createuser',{title:"Twit Clone App>>User Registration"});
+res.render('pages/createuser',{title:"Tweeting  App>>User Registration"});
 })
 
 
 router.get("/user-login",(req,res)=>{
-res.render('pages/login',{title:"Twit Clone App>>User Login"});
+res.render('pages/login',{title:"Tweet  App>>User Login"});
 })
 
 
