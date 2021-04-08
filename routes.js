@@ -48,5 +48,8 @@ router.post("/login",(req,res)=>{
 let body=req.body;
 res.send("Login");
 })
+router.get('*',(req,res)=>{
+  res.render('pages/errors',{title:"Error",errorr:404,err_msg:"The page or reaource you are looking for is not found"})
+})
 //export the router middleware to be ussed on the application
 module.exports=router
