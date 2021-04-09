@@ -21,7 +21,10 @@ res.render('pages/createuser');
 router.get("/user-login",(req,res)=>{
 res.render('pages/login');
 })
-
+//add-twit
+router.get("/add-twit",(req,res)=>{
+res.render('pages/add-twits');
+})
 //post request for user Registration
 router.post("/register",async(req,res)=>{
     let body=req.body;
