@@ -4,39 +4,59 @@ const router = express.Router();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 const {Sequelize,Op}=require("sequelize");
 
 //home route
 router.get('/',(req,res)=>{
-  res.render('pages/index',{title:"Tweeting  App>>Home"});
+  res.render('pages/index');
 })
 
 
 router.get("/register",(req,res)=>{
-res.render('pages/createuser',{title:"Tweeting  App>>User Registration"});
+res.render('pages/createuser');
 })
 
 
 router.get("/user-login",(req,res)=>{
-res.render('pages/login',{title:"Tweet  App>>User Login"});
+res.render('pages/login');
 })
 
-
 //post request for user Registration
-router.post("/register",(req,res)=>{
+router.post("/register",async(req,res)=>{
     let body=req.body;
     let username=body.username,password=body.password,confirmpass=body.cpassword;
       if(username===""||password===""||confirmpass===""){
           res.render('pages/errors',{title:"Error",errorr:400,err_msg:" All form fields mus not be Empty"})
     }else{
       if(password!==confirmpass){
-        res.render('pages/errors',{title:"Error",errorr:400,err_msg:" Passwords Do not Match"})
+        res.render('pages/errors',{errorr:400,err_msg:" Passwords Do not Match"})
 
       }else{
-        res.render("pages/index");
 
+        const User=require("./models/User.js");
+        let existUser= await User.findOne({
+          where:{
+            username:username,
+          }
+        }
+
+      ).then((existUser)=>{
+        if(existUser){
+          console.log(`Cannot Regsiter User: Username ${username} is already being used`)
+          res.render("pages/errors",{errorr:500,err_msg:`Cannot Regsiter User: Username ${username} is already being used`})
+        }else{
+          let hashPass=bcrypt.hashSync(password, 10);
+          let user= User.create({
+            id:uuidv4(),
+            username:username,password:hashPass
+
+          }).then((user)=>{console.log(user.toJSON())
+            res.redirect("/")
+          })
+        }
+      })
       }
-
     }
 //res.send("Registration");
 })
@@ -46,6 +66,11 @@ router.post("/register",(req,res)=>{
 
 router.post("/login",(req,res)=>{
 let body=req.body;
+if(body.username==""||body.password==""){
+res.render('pages/errors',{title:"Error",errorr:400,err_msg:"Username or Password Missing"})
+}else{
+
+}
 res.send("Login");
 })
 router.get('*',(req,res)=>{
