@@ -47,12 +47,15 @@ router.post("/register",async(req,res)=>{
           res.render("pages/errors",{errorr:500,err_msg:`Cannot Regsiter User: Username ${username} is already being used`})
         }else{
           let hashPass=bcrypt.hashSync(password, 10);
-          let user= User.create({
-            id:uuidv4(),
+          let user=User.create({
+            userId:uuidv4(),
             username:username,password:hashPass
 
           }).then((user)=>{console.log(user.toJSON())
-            res.redirect("/")
+              res.redirect("/")
+          }).catch((error)=>{
+            console.log(`User  Registration Not Succesful: ${error}`)
+            res.render('pages/errors',{errorr:500,err_msg:`User  Registration Not Succesful: ${error}`})
           })
         }
       })

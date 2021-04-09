@@ -15,7 +15,6 @@ const app=express()
 const routes = require('./routes');
 
 app.set("view engine","ejs");
-
 const middlewares=[cookieParser(),express.urlencoded({extended: false}),express.static('public'),expressLayouts];
 
 app.use(middlewares);
