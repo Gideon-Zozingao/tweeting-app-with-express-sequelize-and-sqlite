@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require('sequelize')
 const { v4: uuidv4 } = require('uuid');
 const sequelize = require('../db.js')
+const Twits=require("./Twits.js")
 class User extends Model {}
 User.init({
-  id:{
+  UserId:{
     type:DataTypes.UUID,
     primaryKey:true,
     allowNull:false,
@@ -19,6 +20,10 @@ User.init({
       allowNull:false
     }
 }, { sequelize});
+User.associat=(modeles)=>{
+User.hasMany(models.Twits,{foreignKey:"UserId",as:"user_id"})
+};
+
 (async ()=>{
     await sequelize.sync()
 })()

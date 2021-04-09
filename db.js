@@ -2,7 +2,8 @@ const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage:"tweeting-app-db.db"
+  storage:"tweeting-app-db.db",
+  loging:false
 });
    sequelize.authenticate().then(()=>{
                                       console.log("Database server Connection Established");

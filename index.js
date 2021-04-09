@@ -5,6 +5,7 @@ const express=require("express")
 
 const {conn}=require("./db.js")
 const {User}=require("./models/User.js")
+const {Twits}=require("./models/Twits.js")
 const bodyParser=require("body-parser")
 const cookieParser = require("cookie-parser")
 var expressLayouts = require('express-ejs-layouts');
