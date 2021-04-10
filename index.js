@@ -13,7 +13,6 @@ const { v4: uuidv4 } = require('uuid');
 //const bcrypt = require('bcryptjs');
 const app=express()
 const routes = require('./routes');
-
 app.set("view engine","ejs");
 
 app.use((req,res,next)=>{

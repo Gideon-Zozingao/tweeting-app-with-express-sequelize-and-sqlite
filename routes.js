@@ -8,16 +8,23 @@ const bcrypt = require('bcryptjs');
 const {Sequelize,Op}=require("sequelize");
 
 //home route
-router.get('/',(req,res)=>{
+router.get('/',async(req,res)=>{
+  let User=require("./models/User.js");
 
+  const twiters=await User.findAndCountAll(
+  )
+  let json_data=JSON.stringify(twiters);
+  let twitors_count=JSON.parse(json_data)
+  console.log(twitors_count.count);
   let sess_ID=req.cookies.SID;
   res.locals.user=req.locals.user;
   res.locals.S_ID=sess_ID;
-  //console.log(res.locals.SID)
+
   if(!sess_ID){
-    
-  res.render('pages/index')
+
+  res.render('pages/index',{twitors:twitors_count.count})
 }else{
+
   res.render("pages/members")
 }
 
@@ -36,6 +43,20 @@ router.get("/user-login",(req,res)=>{
   res.locals.S_ID=sess_ID;
   if(!sess_ID){
     res.render('pages/login');
+  }else{
+    res.redirect('/');
+  }
+
+})
+
+
+// View the  Active users
+router.get("/users",(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
+  if(!sess_ID){
+    res.render('pages/user');
   }else{
     res.redirect('/');
   }
@@ -151,7 +172,7 @@ router.post("/login",async(req,res)=>{
           const user_data=JSON.parse(jason_data)
           const curr_user ={username:user_data.username,uid:user_data.UserId};
           res.locals.user=curr_user;
-          res.redirect("/add-twit");
+          res.redirect("/");
           console.log(JSON.stringify(res.locals.user))
         }
       }).catch((error)=>{
