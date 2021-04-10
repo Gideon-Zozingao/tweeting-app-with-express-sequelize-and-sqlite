@@ -9,17 +9,40 @@ const {Sequelize,Op}=require("sequelize");
 
 //home route
 router.get('/',(req,res)=>{
-  res.render('pages/index');
+  let sess_ID=req.cookies.SID;
+  if(!sess_ID){
+  res.render('pages/index')
+}else{
+  res.render("pages/members")
+}
+
 })
-
-
 router.get("/register",(req,res)=>{
 res.render('pages/createuser');
 })
 
 
 router.get("/user-login",(req,res)=>{
-res.render('pages/login');
+  let sess_ID=req.cookies.SID;
+  if(!sess_ID){
+    res.render('pages/login');
+  }else{
+    res.redirect('/');
+  }
+
+})
+
+//handels logoute request
+router.get("/logout",(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  if(!sess_ID){
+    res.redirect('/');
+  }else{
+    res.cookie("SID","",{expires:new Date(Date.now()-900000)})
+    res.redirect('/');
+    console.log("Session Cookie Destryed and User Loged out")
+  }
+
 })
 //view Twits
 router.get("/twits",(req,res)=>{
@@ -27,7 +50,13 @@ res.render('pages/twits');
 })
 //add-twit
 router.get("/add-twit",(req,res)=>{
-res.render('pages/add-twits');
+  let sess_ID=req.cookies.SID;
+  if(!sess_ID){
+    res.redirect('/user-login');
+  }else{
+    res.render('pages/add-twits');
+  }
+
 })
 
 //post request for user Registration
@@ -72,17 +101,37 @@ router.post("/register",async(req,res)=>{
 //res.send("Registration");
 })
 
-
-
-
-router.post("/login",(req,res)=>{
-let body=req.body;
-if(body.username==""||body.password==""){
+router.post("/login",async(req,res)=>{
+const {username,password}=req.body;
+if(!username||!password){
 res.render('pages/errors',{title:"Error",errorr:400,err_msg:"Username or Password Missing"})
 }else{
 
+  let User=require("./models/User.js")
+  let user=await User.findOne({where:{
+    [Op.and]:[{username:username},{password:password}]
+  }}
+
+  ).then((user)=>{
+    if(!user){
+      console.log(`Ivalid User Credentials`);
+      res.render("pages/errors",{errorr:404,err_msg:"Invalid User Credentials"});
+    }else{
+      const sessid =uuidv4()
+      res.cookie('SID', sessid, {
+        expires: new Date(Date.now() + 900000),
+        httpOnly: true
+      })
+        res.redirect("/add-twit");
+        console.log(JSON.stringify(user))
+    }
+  }).catch((error)=>{
+    console.log(`Error: ${error}`);
+    res.render("pages/errors",{errorr:500,err_msg:"Your login request cannot be processed Now due to some technical errors. Try again agia later"});
+  })
+//res.redirect("/");
 }
-res.send("Login");
+//res.send("Login");
 })
 
 
@@ -96,13 +145,33 @@ router.post("/add-twit",async(req,res)=>{
     res.render("pages/errors",{errorr:400,err_msg:"Form fileds are empty"})
   }else{
     let User=require("./models/User.js");
-    let user=await User.findAll({
+    let user=await User.findOne({
       where:{[Op.and]:[{username:body.username},{password:body.password}]}
       //console.log(user)
     }).then((user)=>{
-      if(user.length>0){
-        res.redirect("/add-twit");
-        console.log(user.dataValues)
+      if(user){
+        let user_data=JSON.stringify(user)
+        let data=JSON.parse(user_data)
+        console.log(`Username: ${data.username} UserId:${data.UserId}`)
+          let Twits=require("./models/Twits.js")
+          let twit= Twits.create({
+            twitId:uuidv4(),
+            twits:body.twit,
+            UserId:data.UserId
+
+          }).then((twit)=>{
+            if(twit){
+              console.log(twit)
+              res.redirect("/add-twit");
+            }else{
+              res.render("pages/error",{errorr:500,err_msg:"Twits Not Added"})
+            }
+          }).catch((error)=>{
+          console.log(`Error: ${error}`)
+          res.render("pages/error",{errorr:500,err_msg:`Twits Not Added ${error}`})
+        })
+
+
       }else{
         res.render("pages/errors",{errorr:404,err_msg:"Invalid User Credentials"})
         console.log(`Invalid User Credentials`)

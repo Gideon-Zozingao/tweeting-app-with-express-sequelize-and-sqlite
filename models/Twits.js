@@ -15,7 +15,12 @@ Twits.init(
   twits:{
       type:DataTypes.STRING,
       allowNull:false
-    }},
+    },
+    UserId:{
+      type:DataTypes.UUID,
+      allowNull:false
+    }
+  },
       {sequelize});
     Twits.associat=(models)=>{
       Twits.belongsTo(models.User,{foreignKey:"UserId",as:"user_id"})
