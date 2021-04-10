@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage:"tweeting-app-db.db",
+  storage:"onzaec-twits-db.db",
   logging:false
 });
    sequelize.authenticate().then(()=>{

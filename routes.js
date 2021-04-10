@@ -21,10 +21,15 @@ res.render('pages/createuser');
 router.get("/user-login",(req,res)=>{
 res.render('pages/login');
 })
+//view Twits
+router.get("/twits",(req,res)=>{
+res.render('pages/twits');
+})
 //add-twit
 router.get("/add-twit",(req,res)=>{
 res.render('pages/add-twits');
 })
+
 //post request for user Registration
 router.post("/register",async(req,res)=>{
     let body=req.body;
@@ -49,16 +54,16 @@ router.post("/register",async(req,res)=>{
           console.log(`Cannot Regsiter User: Username ${username} is already being used`)
           res.render("pages/errors",{errorr:500,err_msg:`Cannot Regsiter User: Username ${username} is already being used`})
         }else{
-          let hashPass=bcrypt.hashSync(password, 10);
+
           let user=User.create({
-            userId:uuidv4(),
-            username:username,password:hashPass
+            UserId:uuidv4(),
+            username:username,password:password
 
           }).then((user)=>{console.log(user.toJSON())
               res.redirect("/")
           }).catch((error)=>{
             console.log(`User  Registration Not Succesful: ${error}`)
-            res.render('pages/errors',{errorr:500,err_msg:`User  Registration Not Succesful: ${error}`})
+            res.render('pages/errors',{errorr:500,err_msg:`User  Registration Not Succesful: Due to and Internal Error <br> Please Try again later`})
           })
         }
       })
@@ -79,8 +84,50 @@ res.render('pages/errors',{title:"Error",errorr:400,err_msg:"Username or Passwor
 }
 res.send("Login");
 })
+
+
+
+
+
+// posting Twits
+router.post("/add-twit",async(req,res)=>{
+  let body=req.body
+  if(body.username==""||body.password==""||body.twit==""){
+    res.render("pages/errors",{errorr:400,err_msg:"Form fileds are empty"})
+  }else{
+    let User=require("./models/User.js");
+    let user=await User.findAll({
+      where:{[Op.and]:[{username:body.username},{password:body.password}]}
+      //console.log(user)
+    }).then((user)=>{
+      if(user.length>0){
+        res.redirect("/add-twit");
+        console.log(user.dataValues)
+      }else{
+        res.render("pages/errors",{errorr:404,err_msg:"Invalid User Credentials"})
+        console.log(`Invalid User Credentials`)
+
+      }
+    }).catch((error)=>{
+      console.log(`Error: ${error}`)
+      res.render("pages/errors",{errorr:500,err_msg:`Internal Server Error: Your Request Could not be Processed at this Time> Try again Later`})
+  })
+    //res.redirect('/add-twit');
+  }
+
+})
+
+
+
+
+//bad get requests get captured here
 router.get('*',(req,res)=>{
   res.render('pages/errors',{title:"Error",errorr:404,err_msg:"The page or reaource you are looking for is not found"})
+})
+
+//bad post request get captured here
+router.post('*',(req,res)=>{
+  res.render('pages/errors', {title:"Error",errorr:400,err_msg:"The Request you Submites is Forbiden"})
 })
 //export the router middleware to be ussed on the application
 module.exports=router
