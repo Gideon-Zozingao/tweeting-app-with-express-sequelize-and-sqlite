@@ -1,5 +1,5 @@
 const express = require('express');
-
+const app=express();
 const router = express.Router();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
@@ -102,36 +102,40 @@ router.post("/register",async(req,res)=>{
 })
 
 router.post("/login",async(req,res)=>{
-const {username,password}=req.body;
-if(!username||!password){
-res.render('pages/errors',{title:"Error",errorr:400,err_msg:"Username or Password Missing"})
-}else{
+    const {username,password}=req.body;
 
-  let User=require("./models/User.js")
-  let user=await User.findOne({where:{
-    [Op.and]:[{username:username},{password:password}]
-  }}
-
-  ).then((user)=>{
-    if(!user){
-      console.log(`Ivalid User Credentials`);
-      res.render("pages/errors",{errorr:404,err_msg:"Invalid User Credentials"});
+    if(!username||!password){
+        res.render('pages/errors',{title:"Error",errorr:400,err_msg:"Username or Password Missing"})
     }else{
-      const sessid =uuidv4()
-      res.cookie('SID', sessid, {
-        expires: new Date(Date.now() + 900000),
-        httpOnly: true
-      })
-        res.redirect("/add-twit");
-        console.log(JSON.stringify(user))
+        let User=require("./models/User.js")
+        let user=await User.findOne({where:{
+            [Op.and]:[{username:username},{password:password}]
+      }
     }
-  }).catch((error)=>{
-    console.log(`Error: ${error}`);
-    res.render("pages/errors",{errorr:500,err_msg:"Your login request cannot be processed Now due to some technical errors. Try again agia later"});
-  })
-//res.redirect("/");
-}
-//res.send("Login");
+).then((user)=>{
+        if(!user){
+            console.log(`Ivalid User Credentials`);
+            res.render("pages/errors",{errorr:404,err_msg:"Invalid User Credentials"});
+        }else{
+            const sessid =uuidv4()
+            res.cookie('SID', sessid, {
+              expires: new Date(Date.now() + 900000),
+              httpOnly: true
+          })
+          let jason_data=JSON.stringify(user)
+          const user_data=JSON.parse(jason_data)
+          const curr_user ={user:user_data.username,uid:user_data.UserId};
+          app.locals.user=curr_user;
+          res.redirect("/add-twit");
+          console.log(JSON.stringify(user))
+        }
+      }).catch((error)=>{
+          console.log(`Error: ${error}`);
+          res.render("pages/errors",{errorr:500,err_msg:"Your login request cannot be processed Now due to some technical errors. Try again agia later"});
+      })
+    //res.redirect("/");
+    }
+    //res.send("Login");
 })
 
 
