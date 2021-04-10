@@ -29,16 +29,27 @@
 
 
         <div class="nav-item dropdown">
+          <% if(user){%>
+<a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown"><%=JSON.stringify(user)%></a>
+
+          <%}else{%>
             <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Account</a>
+
+          <%}%>
+
             <div class="dropdown-menu">
+                <% if(S_ID){%>
+                  <a href="/profile" class="dropdown-item">Profile</a>
+                  <a href="/logout" class="dropdown-item">Logout</a>
+                <%}else{%>
+                  <a href="/user-login" class="dropdown-item">Login</a>
+                  <a href="/register" class="dropdown-item">Register</a>
+              <%}%>
 
-                <a href="/user-login" class="dropdown-item">Login</a>
-                <a href="/register" class="dropdown-item">Register</a>
 
-                <a href="/profile" class="dropdown-item">Profile</a>
-                <a href="/logout" class="dropdown-item">Logout</a>
 
-            
+
+
 
             </div>
         </div>

@@ -15,6 +15,13 @@ const app=express()
 const routes = require('./routes');
 
 app.set("view engine","ejs");
+
+app.use((req,res,next)=>{
+app.locals={}
+req.locals={}
+res.locals={}
+next()
+})
 const middlewares=[cookieParser(),express.urlencoded({extended: false}),express.static('public'),expressLayouts];
 
 app.use(middlewares);

@@ -1,5 +1,5 @@
 const express = require('express');
-const app=express();
+const app=require("express");
 const router = express.Router();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
@@ -9,8 +9,13 @@ const {Sequelize,Op}=require("sequelize");
 
 //home route
 router.get('/',(req,res)=>{
+
   let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
+  //console.log(res.locals.SID)
   if(!sess_ID){
+    
   res.render('pages/index')
 }else{
   res.render("pages/members")
@@ -18,12 +23,17 @@ router.get('/',(req,res)=>{
 
 })
 router.get("/register",(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
 res.render('pages/createuser');
 })
 
 
 router.get("/user-login",(req,res)=>{
   let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
   if(!sess_ID){
     res.render('pages/login');
   }else{
@@ -35,6 +45,8 @@ router.get("/user-login",(req,res)=>{
 //handels logoute request
 router.get("/logout",(req,res)=>{
   let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
   if(!sess_ID){
     res.redirect('/');
   }else{
@@ -46,11 +58,17 @@ router.get("/logout",(req,res)=>{
 })
 //view Twits
 router.get("/twits",(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
 res.render('pages/twits');
 })
 //add-twit
 router.get("/add-twit",(req,res)=>{
   let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
+
   if(!sess_ID){
     res.redirect('/user-login');
   }else{
@@ -62,6 +80,9 @@ router.get("/add-twit",(req,res)=>{
 //post request for user Registration
 router.post("/register",async(req,res)=>{
     let body=req.body;
+    let sess_ID=req.cookies.SID;
+    res.locals.user=req.locals.user;
+    res.locals.S_ID=sess_ID;
     let username=body.username,password=body.password,confirmpass=body.cpassword;
       if(username===""||password===""||confirmpass===""){
           res.render('pages/errors',{title:"Error",errorr:400,err_msg:" All form fields mus not be Empty"})
@@ -102,7 +123,11 @@ router.post("/register",async(req,res)=>{
 })
 
 router.post("/login",async(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
     const {username,password}=req.body;
+
 
     if(!username||!password){
         res.render('pages/errors',{title:"Error",errorr:400,err_msg:"Username or Password Missing"})
@@ -124,10 +149,10 @@ router.post("/login",async(req,res)=>{
           })
           let jason_data=JSON.stringify(user)
           const user_data=JSON.parse(jason_data)
-          const curr_user ={user:user_data.username,uid:user_data.UserId};
-          app.locals.user=curr_user;
+          const curr_user ={username:user_data.username,uid:user_data.UserId};
+          res.locals.user=curr_user;
           res.redirect("/add-twit");
-          console.log(JSON.stringify(user))
+          console.log(JSON.stringify(res.locals.user))
         }
       }).catch((error)=>{
           console.log(`Error: ${error}`);
@@ -144,6 +169,9 @@ router.post("/login",async(req,res)=>{
 
 // posting Twits
 router.post("/add-twit",async(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
   let body=req.body
   if(body.username==""||body.password==""||body.twit==""){
     res.render("pages/errors",{errorr:400,err_msg:"Form fileds are empty"})
@@ -195,11 +223,17 @@ router.post("/add-twit",async(req,res)=>{
 
 //bad get requests get captured here
 router.get('*',(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
   res.render('pages/errors',{title:"Error",errorr:404,err_msg:"The page or reaource you are looking for is not found"})
 })
 
 //bad post request get captured here
 router.post('*',(req,res)=>{
+  let sess_ID=req.cookies.SID;
+  res.locals.user=req.locals.user;
+  res.locals.S_ID=sess_ID;
   res.render('pages/errors', {title:"Error",errorr:400,err_msg:"The Request you Submites is Forbiden"})
 })
 //export the router middleware to be ussed on the application
