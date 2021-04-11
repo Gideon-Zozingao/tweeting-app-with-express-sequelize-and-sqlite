@@ -11,10 +11,16 @@
            </p>
   </div>
 <div class="container">
-  <%let t=JSON.parse(twits)
-for(let i of t){%>
-    <p><%=i.twits%><a href="/twit/id=<%=i.twitId%>"><i class="fa fa-eye"></i></a></p>
-<%}
+  <%
+  if(data){
+    for(let i of data){%>
+        <p><%=i.twits%><a href="/twit/id=<%=i.twitId%>"><i class="fa fa-eye"></i></a></p>
+    <%}
+  }else{%>
+    <h4 class="text-muted text-center">No Twits Avalable Today</h4>
+    <p class="text-center">Be the first one to Twit now</p>
+  <%}
+
   %>
 
 </div>

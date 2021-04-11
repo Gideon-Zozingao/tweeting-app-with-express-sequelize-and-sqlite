@@ -89,11 +89,12 @@ router.get("/twits",async(req,res)=>{
 
   }).then((twits)=>{
     if(twits.length>0){
-      let twits_data=JSON.stringify(twits)
-      res.render('pages/twits',{twits:twits_data});
+      //let twits_data=JSON.stringify(twits)
+      res.render('pages/twits',{data:twits});
       //console.log(twits_data);
     }else{
-consol.log("No twits Awialable");
+        res.render('pages/twits',{data:""});
+        console.log("No twits Awialable");
     }
   }).catch((error)=>{
     console.log(`Error: ${error}`);
