@@ -13,7 +13,7 @@
 <div class="container">
   <%let t=JSON.parse(twits)
 for(let i of t){%>
-    <p><%=i.twits%></p>
+    <p><%=i.twits%><a href="/twit/id=<%=i.twitId%>"><i class="fa fa-eye"></i></a></p>
 <%}
   %>
 

@@ -91,7 +91,7 @@ router.get("/twits",async(req,res)=>{
     if(twits.length>0){
       let twits_data=JSON.stringify(twits)
       res.render('pages/twits',{twits:twits_data});
-      console.log(twits_data);
+      //console.log(twits_data);
     }else{
 consol.log("No twits Awialable");
     }

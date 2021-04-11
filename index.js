@@ -8,6 +8,7 @@ const {User}=require("./models/User.js")
 const {Twits}=require("./models/Twits.js")
 const bodyParser=require("body-parser")
 const cookieParser = require("cookie-parser")
+const session =require("express-session")
 var expressLayouts = require('express-ejs-layouts');
 const { v4: uuidv4 } = require('uuid');
 //const bcrypt = require('bcryptjs');
@@ -16,7 +17,11 @@ const routes = require('./routes');
 app.set("view engine","ejs");
 
 app.use((req,res,next)=>{
-app.locals={}
+app.locals={
+	twits: {
+		
+	}
+}
 req.locals={}
 res.locals={}
 next()
