@@ -23,7 +23,7 @@ Twits.init(
   },
       {sequelize});
     Twits.associat=(models)=>{
-      Twits.belongsTo(models.User,{foreignKey:"UserId",as:"user_id"})
+      Twits.belongsTo(models.User,{foreignKey:"UserId"})
     };
 
     (async ()=>{

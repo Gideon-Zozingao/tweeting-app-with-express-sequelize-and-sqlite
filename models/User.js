@@ -21,7 +21,7 @@ User.init({
     }
 }, { sequelize});
 User.associat=(modeles)=>{
-User.hasMany(models.Twits,{foreignKey:"UserId",as:"user_id"})
+User.hasMany(models.Twits,{foreignKey:"UserId"})
 };
 
 (async ()=>{

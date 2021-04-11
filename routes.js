@@ -15,7 +15,7 @@ router.get('/',async(req,res)=>{
   )
   let json_data=JSON.stringify(twiters);
   let twitors_count=JSON.parse(json_data)
-  console.log(twitors_count.count);
+  //console.log(twitors_count.count);
   let sess_ID=req.cookies.SID;
   res.locals.user=req.locals.user;
   res.locals.S_ID=sess_ID;
@@ -78,11 +78,28 @@ router.get("/logout",(req,res)=>{
 
 })
 //view Twits
-router.get("/twits",(req,res)=>{
+router.get("/twits",async(req,res)=>{
   let sess_ID=req.cookies.SID;
   res.locals.user=req.locals.user;
-  res.locals.S_ID=sess_ID;
-res.render('pages/twits');
+  res.locals.S_ID=sess_ID
+
+  const Twits=require("./models/Twits.js")
+  const User=require("./models/User.js")
+  const twits=await Twits.findAll({
+
+  }).then((twits)=>{
+    if(twits.length>0){
+      let twits_data=JSON.stringify(twits)
+      res.render('pages/twits',{twits:twits_data});
+      console.log(twits_data);
+    }else{
+consol.log("No twits Awialable");
+    }
+  }).catch((error)=>{
+    console.log(`Error: ${error}`);
+    res.render("pages/errors",{errorr:500,err_msg:`Error: ${error}`})
+  })
+
 })
 //add-twit
 router.get("/add-twit",(req,res)=>{
@@ -119,7 +136,6 @@ router.post("/register",async(req,res)=>{
             username:username,
           }
         }
-
       ).then((existUser)=>{
         if(existUser){
           console.log(`Cannot Regsiter User: Username ${username} is already being used`)
@@ -131,7 +147,7 @@ router.post("/register",async(req,res)=>{
             username:username,password:password
 
           }).then((user)=>{console.log(user.toJSON())
-              res.redirect("/")
+              res.redirect("/user-login")
           }).catch((error)=>{
             console.log(`User  Registration Not Succesful: ${error}`)
             res.render('pages/errors',{errorr:500,err_msg:`User  Registration Not Succesful: Due to and Internal Error <br> Please Try again later`})
@@ -215,6 +231,7 @@ router.post("/add-twit",async(req,res)=>{
           }).then((twit)=>{
             if(twit){
               console.log(twit)
+              console.log(req.locals.user);
               res.redirect("/add-twit");
             }else{
               res.render("pages/error",{errorr:500,err_msg:"Twits Not Added"})

@@ -11,5 +11,10 @@
            </p>
   </div>
 <div class="container">
+  <%let t=JSON.parse(twits)
+for(let i of t){%>
+    <p><%=i.twits%></p>
+<%}
+  %>
 
 </div>
