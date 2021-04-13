@@ -1,0 +1,18 @@
+<title>Onzaec Twits>> Users</title>
+</head>
+<body>
+
+
+    <div class = "jumbotron">
+           <h1 class="text-center">Onzaec Tweets</h1>
+           <p class="text-center">Active Users</p>
+
+  </div>
+<div class="container">
+<p class="text-sm">
+  <% for( let u of data){%>
+  <p><%=u.username%> <span><a href="
+    /user/<%=u.username%>">Details</a></span></p>
+  <%}%>
+</p>
+</div>
