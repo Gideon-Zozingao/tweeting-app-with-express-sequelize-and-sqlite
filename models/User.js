@@ -1,10 +1,10 @@
-const { Model, DataTypes } = require('sequelize')
+const { Model, DataTypes} = require('sequelize')
 const { v4: uuidv4 } = require('uuid');
 const sequelize = require('../db.js')
 //const Twits=require("./Twits.js")
 class User extends Model { }
 User.init({
-  UserId: {
+  userId: {
     type: DataTypes.UUID,
     primaryKey: true,
     allowNull: false,

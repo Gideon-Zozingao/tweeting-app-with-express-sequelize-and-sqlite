@@ -13,8 +13,8 @@
 <div class="container">
   <%
   if(data){
-    for(let i of data){%>
-        <p><%=i.twits%><a href="/twit/id=<%=i.twitId%>"><i class="fa fa-eye"></i></a></p>
+    for(let twit of data){%>
+        <p><%=twit.twits%><a href="/twit/<%=twit.twitId%>"> Details</a></p>
     <%}
   }else{%>
     <h4 class="text-muted text-center">No Twits Avalable Today</h4>

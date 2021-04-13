@@ -16,20 +16,10 @@ Twits.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    UserId: {
+    user: {
       type: DataTypes.UUID,
       allowNull: false
     }
   },
   { sequelize });
-User.associat = (modeles) => {
-  User.hasMany(models.Twits, { foreignKey: "UserId" })
-};
-Twits.associat = (models) => {
-  Twits.belongsTo(models.User, { foreignKey: "UserId" })
-};
-
-(async () => {
-  await sequelize.sync()
-})()
 module.exports = Twits
