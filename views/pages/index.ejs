@@ -5,14 +5,28 @@
 
     <div class = "jumbotron">
            <h1 class="text-center">Onzaec Twits</h1>
-           <p  class="text-center">Connect with <%=twitors%> active Twitors now and see what they are syaing</p>
-           <p class="text-center">
-              <a class = "btn btn-primary btn-lg" role = "button" href="/register">Signup</a>
-           </p>
+           <p  class="text-center">A Place where People Share there thoughts<br> <i class="h5">Anyhow! Anywhere! Everywhere!</i></p>
+
   </div>
 <div class="container">
-<h1 class="text-muted">WELCOME</h1>
-<h3 class="text-sm">
-  This is a twiting Application build with Express JS and Sequelize
-</h3>
+<div class="row">
+  <div class="col-md-4">
+    <% if(!twitors){
+      %>Be the first One to twit and Share
+    <%}else{%>
+      <h5 class=" text-info"><%=twitors%> People are twitting today</h5>
+      <p>Join them  now and Twit.. Twit.. Twit..</p>
+      <p class="">
+         <a class = "btn btn-primary btn-lg" role = "button" href="/register">Signup</a>
+      </p>
+    <%}%>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <h1 class="text-center">Hellow world2</h1>
+    </div>
+
+  </div>
+
+</div>
 </div>
