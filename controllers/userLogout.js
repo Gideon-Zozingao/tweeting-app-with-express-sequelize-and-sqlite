@@ -1,22 +1,15 @@
-exports.logout=(req, res) => {
-  let sess_ID = req.cookies.SID;
+exports.logout = (req, res) => {
+  let auth = req.cookies.Auth;
   res.locals.user = req.locals.user;
-  res.locals.S_ID = sess_ID;
-  if (!sess_ID) {
+  res.locals.auth = auth;
+  if (!auth) {
     res.redirect('/');
   } else {
-    res.cookie("SID", "", { expires: new Date(Date.now() - 900000) })
-    res.cookie('userID', "", {
-      expires: new Date(Date.now() - 900000),
-      httpOnly: true
+    res.cookie("Auth", "", {
+      expires: new Date(Date.now() - 900000)
     })
-    res.cookie('username', "", {
-      expires: new Date(Date.now() - 900000),
-      httpOnly: true
-    })
-
     res.redirect('/');
-    console.log("Session Cookie Destr0yed and user Loged out")
+    console.log("Session Cookie Destroyed and user Loged out")
   }
 
 }

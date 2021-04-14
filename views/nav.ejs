@@ -3,20 +3,15 @@
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
         <div class="navbar-nav">
-
             <a href="/about" class="nav-item nav-link">About</a>
             <a href="/users" class="nav-item nav-link">Users</a>
-
         </div>
           <div class="navbar-nav">
-            <a href="/add-twit" class="nav-item nav-link "><i class="fa fa-plus"></i>Add a Twit</a>
-            <a href="/twits" class="nav-item nav-link"><i class="fa fa-eye"></i>View Twits</a>
+            <a href="/add-twit" class="nav-item nav-link "><i class="fa fa-send"></i>Twit now</a>
+            <a href="/twits" class="nav-item nav-link"><i class="fa fa-eye"></i> Twits</a>
           </div>
-
-
         <form class="form-inline" action="/search" method="get">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search" name="searchQ">
@@ -25,20 +20,14 @@
                 </div>
             </div>
         </form>
-
-
-
         <div class="nav-item dropdown">
-          <% if(user){%>
-<a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown"><%=JSON.stringify(user)%></a>
-
+          <% if(auth!==undefined){%>
+<a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown"></a>
           <%}else{%>
             <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Account</a>
-
           <%}%>
-
             <div class="dropdown-menu">
-                <% if(S_ID){%>
+                <% if(auth){%>
                   <a href="/profile" class="dropdown-item">Profile</a>
                   <a href="/logout" class="dropdown-item">Logout</a>
                 <%}else{%>

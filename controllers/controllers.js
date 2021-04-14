@@ -1,10 +1,8 @@
-const cookieParser = require("cookie-parser")
-const bodyParser = require('body-parser')
 const {
   v4: uuidv4
 } = require('uuid')
 const bcrypt = require('bcryptjs')
-const jwt = require("jsonwebtoken")
+const config = require("../config/config");
 const home = require("./homeRoute")
 const loginForm = require("./login")
 const addTwitsPost = require("./addTwits")
@@ -15,7 +13,7 @@ const userRegistration = require("./userRegistration")
 const getTwits = require("./getTwits")
 const getUserRegForm = require("./getUserRegForm")
 const viewUsers = require("./viewUsers")
-userLogout = require("./userLogout")
+const userLogout = require("./userLogout")
 const viewUser = require("./viewUserDetail")
 const invalidGet = require("./invalidGet")
 const invalidPost = require("./invalidPost")
