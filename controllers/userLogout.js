@@ -1,6 +1,6 @@
 exports.logout = (req, res) => {
   let auth = req.cookies.Auth;
-  res.locals.user = req.locals.user;
+  res.locals.user = req.user;
   res.locals.auth = auth;
   if (!auth) {
     res.redirect('/');
@@ -9,7 +9,7 @@ exports.logout = (req, res) => {
       expires: new Date(Date.now() - 900000)
     })
     res.redirect('/');
-    console.log("Session Cookie Destroyed and user Loged out")
+    console.log(`Sessions Token : ${auth} destroyed and User loged out`)
   }
 
 }

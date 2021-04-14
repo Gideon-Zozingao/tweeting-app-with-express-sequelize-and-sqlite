@@ -2,19 +2,28 @@
 </head>
 <body>
 
-
+<%-include("../navAuth")%>
     <div class = "jumbotron">
            <h1 class="text-center">Onzaec Tweets</h1>
            <p class="text-center">People are having fun Twiting here and there</p>
-           <p class="text-center">
-              <a class = "btn btn-primary btn-lg" role = "button" href="/add-twit">Twit Something Now</a>
-           </p>
+
   </div>
 <div class="container">
   <%
   if(data){
     for(let twit of data){%>
-        <p><%=twit.twits%><a href="/twit/<%=twit.twitId%>"> Details</a></p>
+      <div class="card border-primary mb-3" style="min-height:8rem">
+        <div class="card-body">
+          <p><span class="h5"><%=twit.twits%></span> @ <i><% var dateString = twit.createdAt
+         dateString = new Date(dateString).toUTCString();
+         dateString = dateString.split(' ').slice(0, 4).join(' ');
+
+            %><%=dateString%></i><a href="/twit/<%=twit.twitId%>"> Details</a></p>
+
+        </div>
+        </div>
+        <br>
+
     <%}
   }else{%>
     <h4 class="text-muted text-center">No Twits Avalable Today</h4>
@@ -24,3 +33,44 @@
   %>
 
 </div>
+<%-include("../footer")%>
+<script type="text/javascript">
+  const span = document.getElementsByClassName("close")[0];
+  const modal = document.getElementById("myModal");
+  const modalCont=document.querySelector(".modal-inner-content");
+  const showModal=function(){
+    modal.style.display = "block";
+  }
+
+  const closeModal=function(){
+    modal.style.display = "none";
+  }
+
+  const addTwits=document.getElementById("addTwits");
+  addTwits.onclick=function(){
+    let XHR=new XMLHttpRequest();
+     XHR.open("GET", "/add-twit", true);
+    XHR.send()
+    XHR.onreadystatechange =function(){
+       if(this.readyState == 4 && this.status == 200) {
+         modalCont.innerHTML=this.responseText;
+         showModal();
+       }else{
+         //  modalCont.innerHTML = this.readyState+ " "+this.status;
+         // showModal();
+       }
+  }
+  }
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function(){
+    modalCont.innerHTML="";
+    closeModal();
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modalCont.innerHTML="";
+       closeModal();
+    }
+  }
+</script>

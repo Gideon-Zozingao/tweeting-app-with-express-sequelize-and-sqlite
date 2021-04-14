@@ -10,18 +10,13 @@ const {
 const app = express()
 const routes = require('./routes');
 app.set("view engine", "ejs");
-
-app.use((req, res, next) => {
-	app.locals = {
-		twits: {}
-	}
-	req.locals = {}
-	res.locals = {}
-	next()
-})
 const middlewares = [cookieParser(), express.urlencoded({
 	extended: false
-}), express.static('public'), expressLayouts, bodyParser.json()];
+}), express.static('public'), expressLayouts, bodyParser.json(), (req, res,
+	next) => {
+	res.locals.user = req.user;
+	next()
+}];
 
 app.use(middlewares);
 

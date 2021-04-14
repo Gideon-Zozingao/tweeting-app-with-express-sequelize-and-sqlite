@@ -1,8 +1,6 @@
 <nav class ="navbar navbar-expand-xl navbar-dark  fixed-top" style="background-color: rgba(0, 109, 255, 0.81);">
-
   <div class="container">
     <a href="/" class="navbar-brand"><i class="logo"><img src="images/favicon-32x32.png" alt=""></i> Onzaec Twits</a>
-
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,8 +8,10 @@
         <div class="navbar-nav">
             <a href="/about" class="nav-item nav-link">About</a>
             <a href="/users" class="nav-item nav-link">Users</a>
-        </div>
 
+            <a href="/twits" class="nav-item nav-link"><i class="fa fa-eye"></i> Twits</a>
+            <a href="#" class="nav-item nav-link " id="addTwits"><i class="fa fa-plus"></i>Add A Twit</a>
+        </div>
 
         <form class="form-inline" action="/search" method="get">
             <div class="input-group">
@@ -22,11 +22,10 @@
             </div>
         </form>
         <div class="dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+            <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown"><b><%=user.user_name%></b> <i class="fa fa-user"></i></a>
             <div class="dropdown-menu">
-                <a href="#" class="dropdown-item" id="signin">Login</a>
-                <a href="#" class="dropdown-item" id="signup">Register</a>
-
+                <a href="/profile" class="dropdown-item">Profile</a>
+                <a href="/logout" class="dropdown-item">Logout</a>
             </div>
         </div>
     </div>

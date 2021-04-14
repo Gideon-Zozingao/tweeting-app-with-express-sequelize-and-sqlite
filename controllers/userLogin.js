@@ -1,8 +1,7 @@
 //secret key for JWT Token Varification
 const secretKey =
   "88EDD9DF1936988138D5BFB0E045AD2C298F47B6BF1D8CEBDB3E915125FDDBEBCC304F0C7380BDEA9C9D1876EF324D6D6AFEBB066BB964A60781E4EAFE3A2FB5"
-
-//inports sequelize library
+  //inports sequelize library
 const {
   Sequelize, Op
 } = require("sequelize");
@@ -20,7 +19,7 @@ const config = require("../config/config")
 //user login controller function
 exports.userLogin = async(req, res) => {
   let auth = req.cookies.Auth;
-  res.locals.user = req.locals.user;
+  res.locals.user = req.user;
   res.locals.auth = auth;
   const {
     username, password
@@ -31,7 +30,6 @@ exports.userLogin = async(req, res) => {
       err_msg: "Username or Password Missing"
     })
   } else {
-
     let user = await models.User.findOne({
         where: {
           [Op.and]: [{
@@ -48,12 +46,11 @@ exports.userLogin = async(req, res) => {
             err_msg: "Invalid User Credentials"
           });
         } else {
-
-          let jason_data = JSON.stringify(user)
-          const user_data = JSON.parse(jason_data)
+          // let jason_data = JSON.stringify(user)
+          // const user_data = JSON.parse(jason_data)
           const curr_user = {
-            username: user_data.username,
-            uid: user_data.UserId
+            user_name: user.username,
+            uid: user.userId
           };
           const token = jwt.sign(curr_user, secretKey)
           res.cookie('Auth', token, {
@@ -62,14 +59,17 @@ exports.userLogin = async(req, res) => {
           })
           res.locals.user = curr_user;
           res.redirect("/");
-          console.log(JSON.stringify(curr_user))
+          console.log(curr_user)
+          console.log(user)
+            //user
           console.log(token)
         }
       }).catch((error) => {
         console.log(`Error: ${error}`);
         res.render("pages/errors", {
           errorr: 500,
-          err_msg: "Your login request cannot be processed Now due to some technical errors. Try again agia later"
+          err_msg: "Your login request cannot be processed Now due to some technical errors. Try again agia later",
+          user: req.user
         });
       })
       //res.redirect("/");

@@ -1,11 +1,10 @@
 const models = require("../models/models")
+
 exports.viewTwits = async(req, res) => {
   let auth = req.cookies.Auth;
-  res.locals.user = req.locals.user;
+  res.locals.user = req.user;
   res.locals.auth = auth;
-  const twits = await models.Twits.findAll({
-    //include: models.User
-  }).then((twits) => {
+  const twits = await models.Twits.findAll({}).then((twits) => {
     if (twits.length > 0) {
       //let twits_data=JSON.stringify(twits)
       res.render('pages/twits', {

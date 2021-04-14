@@ -1,6 +1,12 @@
-exports.createUser=(req, res) => {
-  let sess_ID = req.cookies.SID;
-  res.locals.user = req.locals.user;
-  res.locals.S_ID = sess_ID;
-  res.render('pages/createuser');
+exports.createUser = (req, res) => {
+  let auth = req.cookies.Auth;
+  res.locals.user = req.user;
+  res.locals.auth = auth;
+  if (auth !== undefined) {
+    res.send('<h4>You are an Active User</h4>')
+  } else {
+    res.render('pages/createuser');
+  }
+
+
 }
