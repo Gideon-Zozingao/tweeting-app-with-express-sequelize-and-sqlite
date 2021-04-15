@@ -9,7 +9,7 @@ const models = require("../models/models")
 exports.registerUser = async(req, res) => {
   let body = req.body;
   let sess_ID = req.cookies.SID;
-  res.locals.user = req.locals.user;
+  res.locals.user = req.user;
   res.locals.S_ID = sess_ID;
   let username = body.username,
     password = body.password,
@@ -47,7 +47,7 @@ exports.registerUser = async(req, res) => {
             password: password
           }).then((user) => {
             console.log(user.toJSON())
-            res.redirect("/user-login")
+            res.redirect("/")
           }).catch((error) => {
             console.log(`User  Registration Not Succesful: ${error}`)
             res.render('pages/errors', {

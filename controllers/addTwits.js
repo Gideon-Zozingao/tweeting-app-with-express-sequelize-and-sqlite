@@ -9,7 +9,7 @@ const models = require("../models/models")
 exports.addTwits = async(req, res) => {
   const body = req.body
   const user = req.user
-  console.log(user);
+  console.log(user.uid);
   if (body.twit == "") {
     res.render("pages/errors", {
       errorr: 400,
@@ -20,11 +20,11 @@ exports.addTwits = async(req, res) => {
     let twit = models.Twits.create({
       twitId: uuidv4(),
       twits: body.twit,
-      user: user.uid
+      UserUserId: user.uid
     }).then((twit) => {
       if (twit) {
         console.log(twit)
-        console.log(user);
+          //
         res.redirect("/twits");
       } else {
         res.render("pages/errors", {

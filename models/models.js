@@ -1,25 +1,55 @@
 const {
-  Model, DataTypes, Op
+  Model, DataTypes
 } = require('sequelize')
 const {
   v4: uuidv4
-} = require('uuid')
+} = require('uuid');
+
 const sequelize = require('../db.js')
-const User = require("./User")
-const Twits = require("./Twits")
-User.associate = (models) => {
-  User.hasMany(models.Twits, {
-    foreignKey: 'userId'
-  })
-}
-Twits.associate = (models) => {
-    Twits.belongsTo(models.User, {
-      foreignKey: 'user'
-    })
+
+
+class User extends Model {}
+User.init({
+  userId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    unique: true
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
-  (async() => {
-    await sequelize.sync()
-  })()
+}, {
+  sequelize
+})
+
+
+class Twits extends Model {}
+Twits.init({
+  twitId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    unique: true
+  },
+  twits: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+}, {
+  sequelize
+})
+User.hasMany(Twits);
+Twits.belongsTo(User);
+(async() => {
+  await sequelize.sync()
+})()
 const models = {
   User, Twits
 }

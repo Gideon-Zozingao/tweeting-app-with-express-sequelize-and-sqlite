@@ -14,11 +14,12 @@
     for(let twit of data){%>
       <div class="card border-primary mb-3" style="min-height:8rem">
         <div class="card-body">
-          <p><span class="h5"><%=twit.twits%></span> @ <i><% var dateString = twit.createdAt
+          <p> <%=twit.User.username%> @ <i><% var dateString = twit.createdAt
          dateString = new Date(dateString).toUTCString();
          dateString = dateString.split(' ').slice(0, 4).join(' ');
 
             %><%=dateString%></i><a href="/twit/<%=twit.twitId%>"> Details</a></p>
+            <p><span class="h5"> <%=twit.twits%></span></p>
 
         </div>
         </div>

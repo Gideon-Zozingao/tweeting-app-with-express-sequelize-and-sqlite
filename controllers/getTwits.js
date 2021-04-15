@@ -1,16 +1,19 @@
 const models = require("../models/models")
-
 exports.viewTwits = async(req, res) => {
   let auth = req.cookies.Auth;
   res.locals.user = req.user;
   res.locals.auth = auth;
-  const twits = await models.Twits.findAll({}).then((twits) => {
+  const twits = await models.Twits.findAll({
+    include: models.User,
+    order: [
+      ['createdAt', 'DESC']
+    ]
+  }).then((twits) => {
     if (twits.length > 0) {
-      //let twits_data=JSON.stringify(twits)
       res.render('pages/twits', {
         data: twits
       });
-      //console.log(twits_data);
+      console.log(twits)
     } else {
       res.render('pages/twits', {
         data: ""
@@ -21,8 +24,7 @@ exports.viewTwits = async(req, res) => {
     console.log(`Error: ${error}`);
     res.render("pages/errors", {
       errorr: 500,
-      err_msg: `Error: You cannot view the Twits Due to some internal Error. Try again later `
+      err_msg: `Error: ${error} `
     })
   })
-
 }
