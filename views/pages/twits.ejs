@@ -1,12 +1,10 @@
 <title>Onzaec Twits>> Twits</title>
 </head>
 <body>
-
 <%-include("../navAuth")%>
     <div class = "jumbotron">
            <h1 class="text-center">Onzaec Tweets</h1>
            <p class="text-center">People are having fun Twiting here and there</p>
-
   </div>
 <div class="container">
   <%
@@ -14,39 +12,83 @@
     for(let twit of data){%>
       <div class="card border-primary mb-3" style="min-height:8rem">
         <div class="card-body">
-          <p> <%=twit.User.username%> @ <i><% var dateString = twit.createdAt
+          <p><span class="text-bold"><a href="
+            /user/<%=twit.User.username%>" class="text-muted"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
          dateString = new Date(dateString).toUTCString();
          dateString = dateString.split(' ').slice(0, 4).join(' ');
 
-            %><%=dateString%></i><a href="/twit/<%=twit.twitId%>"> Details</a></p>
-            <p><span class="h5"> <%=twit.twits%></span></p>
+            %><%=dateString%></i></p>
+            <p class=""><%=twit.twits%></p>
 
+        </div>
+        <div class="card-footer">
+<a href="/twit/<%=twit.twitId%>"><i class="fa fa-info"></i> Details</a><% if(twit.User.username===user.user_name){%>
+<span>
+  <button type="button" name="" class=" btn edit-link" accessKey="<%=twit.twitId%>" class=" btn edit-link"><i class="fa fa-edit"  ></i>Eit</button>
+
+  <button type="button" name="button" class=" btn delete-link" accessKey="<%=twit.twitId%>"><i class="fa fa-trash"  ></i> Delet</button>
+</span>
+
+
+<%}%>
         </div>
         </div>
         <br>
-
     <%}
   }else{%>
     <h4 class="text-muted text-center">No Twits Avalable Today</h4>
     <p class="text-center">Be the first one to Twit now</p>
   <%}
-
   %>
-
 </div>
 <%-include("../footer")%>
 <script type="text/javascript">
   const span = document.getElementsByClassName("close")[0];
   const modal = document.getElementById("myModal");
   const modalCont=document.querySelector(".modal-inner-content");
+
+  let deleteClass=document.querySelectorAll("span .delete-link");
+  //btn edit-link
+  let editClass=document.querySelectorAll("span .edit-link");
+
+  editClass.forEach(editBtn=>{
+    editBtn.addEventListener("click",()=>{
+      console.log(`Edit: ${editBtn.accessKey}`)
+      const XHR=new XMLHttpRequest();
+      XHR.open("GET",`/editTwit/${editBtn.accessKey}`)
+      XHR.send();
+      XHR.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            modalCont.innerHTML=this.responseText;
+            showModal()
+
+        }else{
+            showModal()
+        }
+      }
+    })
+  })
+  deleteClass.forEach(delBtn=>{
+    delBtn.addEventListener("click",()=>{
+      alert(`Delete: ${delBtn.accessKey}`)
+      //const XHR=new XMLHttpRequest();
+      //XHR.epen()
+    })
+  })
+  // for(let i=0;i>deleteClass.length;i++){
+  //
+  //   deleteClass[i].onclick=function(){
+  //     console.log(deleteClass[i]);
+  //     alert(` Delet: ${deleteClass[i]}`);
+  //   }
+  // }
+
   const showModal=function(){
     modal.style.display = "block";
   }
-
   const closeModal=function(){
     modal.style.display = "none";
   }
-
   const addTwits=document.getElementById("addTwits");
   addTwits.onclick=function(){
     let XHR=new XMLHttpRequest();
@@ -57,8 +99,6 @@
          modalCont.innerHTML=this.responseText;
          showModal();
        }else{
-         //  modalCont.innerHTML = this.readyState+ " "+this.status;
-         // showModal();
        }
   }
   }

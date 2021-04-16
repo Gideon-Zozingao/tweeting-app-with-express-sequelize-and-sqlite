@@ -14,10 +14,14 @@ router.get("/twits", controllers.authenticateToken, controllers.viewTwits)
 router.post("/add-twit", controllers.authenticateToken, controllers.addTwits)
   //recive post request fro registration of new users and process them
 router.post("/register", controllers.registerUser)
-  // get the add-twit form
+
+router.post("/editTwit/", controllers.authenticateToken, controllers.UpdateTwit)
+
+// get the add-twit form
 router.get("/add-twit", controllers.getAddTwit)
   //view individual twits
 router.get("/twit/:twit_id", controllers.authenticateToken, controllers.twitDetails)
+router.get("/editTwit/:twit_id", controllers.authenticateToken, controllers.editTwit)
 router.get("/register", controllers.createUser)
   // View the  Active users
 router.get("/users", controllers.authenticateToken, controllers.viewUser)

@@ -6,7 +6,8 @@ exports.viewTwits = async(req, res) => {
   const twits = await models.Twits.findAll({
     include: models.User,
     order: [
-      ['createdAt', 'DESC']
+      ['createdAt', 'DESC'],
+      ["updatedAt", "DESC"]
     ]
   }).then((twits) => {
     if (twits.length > 0) {
