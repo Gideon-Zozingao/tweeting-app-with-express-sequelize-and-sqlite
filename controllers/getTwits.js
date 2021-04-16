@@ -3,6 +3,7 @@ exports.viewTwits = async(req, res) => {
   let auth = req.cookies.Auth;
   res.locals.user = req.user;
   res.locals.auth = auth;
+
   const twits = await models.Twits.findAll({
     include: models.User,
     order: [
@@ -14,7 +15,6 @@ exports.viewTwits = async(req, res) => {
       res.render('pages/twits', {
         data: twits
       });
-      console.log(twits)
     } else {
       res.render('pages/twits', {
         data: ""

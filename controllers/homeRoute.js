@@ -16,7 +16,6 @@ exports.homeRoute = async(req, res) => {
       })
       console.log("Accessing the Landing Page")
     } else {
-      //const token = auth && auth.split(' ')[1]
       jwt.verify(auth, secretKey, (err, user) => {
         if (err) {
           console.log(err)
@@ -25,14 +24,34 @@ exports.homeRoute = async(req, res) => {
             err_msg: "Access Denied"
           })
         } else {
-          req.user = user
-          res.render("pages/members", {
-            user: req.user
+
+          const twits = models.Twits.findAll({
+            include: models.User,
+            order: [
+              ['createdAt', 'DESC'],
+              ["updatedAt", "DESC"]
+            ]
+          }).then((twits) => {
+            if (twits.length > 0) {
+              req.user = user
+              res.render("pages/members", {
+                user: req.user,
+                data: twits
+              })
+
+            } else {
+              res.render('pages/twits', {
+                data: ""
+              });
+              console.log("No twits Awialable");
+            }
+          }).catch((error) => {
+            console.log(`Error: ${error}`);
+            res.render("pages/errors", {
+              errorr: 500,
+              err_msg: `Error: ${error} `
+            })
           })
-          console.log(
-              `User:${JSON.stringify(user)} Accessing the Members Page`
-            )
-            //console.log(user)
         }
       })
 

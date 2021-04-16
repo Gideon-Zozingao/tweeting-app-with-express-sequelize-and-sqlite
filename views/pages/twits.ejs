@@ -53,7 +53,7 @@
 
   editClass.forEach(editBtn=>{
     editBtn.addEventListener("click",()=>{
-      console.log(`Edit: ${editBtn.accessKey}`)
+      //console.log(`Edit: ${editBtn.accessKey}`)
       const XHR=new XMLHttpRequest();
       XHR.open("GET",`/editTwit/${editBtn.accessKey}`)
       XHR.send();
@@ -68,11 +68,22 @@
       }
     })
   })
+
   deleteClass.forEach(delBtn=>{
     delBtn.addEventListener("click",()=>{
-      alert(`Delete: ${delBtn.accessKey}`)
-      //const XHR=new XMLHttpRequest();
-      //XHR.epen()
+      console.log(`Edit: ${delBtn.accessKey}`)
+      const XHR=new XMLHttpRequest();
+      XHR.open("GET",`/deleteTwit/${delBtn.accessKey}`)
+      XHR.send();
+      XHR.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            modalCont.innerHTML=this.responseText;
+            showModal()
+
+        }else{
+            showModal()
+        }
+      }
     })
   })
   // for(let i=0;i>deleteClass.length;i++){

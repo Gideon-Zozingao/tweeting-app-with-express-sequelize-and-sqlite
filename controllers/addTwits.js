@@ -25,7 +25,7 @@ exports.addTwits = async(req, res) => {
       if (twit) {
         console.log(twit)
           //
-        res.redirect("/twits");
+        res.redirect("/");
       } else {
         res.render("pages/errors", {
           errorr: 500,

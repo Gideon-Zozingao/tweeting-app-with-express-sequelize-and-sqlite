@@ -1,0 +1,10 @@
+
+<div class="container">
+  <p class="h5"> You want ot delete this?</p>
+  <p><%=data.twits%></p>
+  <form action="deleteTwit" method="post">
+   <input type ='hidden' name = 'twit_id' value ="<%=data.twitId%>">
+   <button class = "btn btn-primary" > DELETE </button>
+  </form >
+<!--twit-->
+</div>

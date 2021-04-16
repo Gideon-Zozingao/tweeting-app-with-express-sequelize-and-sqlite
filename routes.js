@@ -16,12 +16,13 @@ router.post("/add-twit", controllers.authenticateToken, controllers.addTwits)
 router.post("/register", controllers.registerUser)
 
 router.post("/editTwit/", controllers.authenticateToken, controllers.UpdateTwit)
-
-// get the add-twit form
+router.post("/deleteTwit", controllers.authenticateToken, controllers.deleteTwit)
+  // get the add-twit form
 router.get("/add-twit", controllers.getAddTwit)
   //view individual twits
 router.get("/twit/:twit_id", controllers.authenticateToken, controllers.twitDetails)
 router.get("/editTwit/:twit_id", controllers.authenticateToken, controllers.editTwit)
+router.get("/deleteTwit/:twit_id", controllers.authenticateToken, controllers.deleteConfirmation)
 router.get("/register", controllers.createUser)
   // View the  Active users
 router.get("/users", controllers.authenticateToken, controllers.viewUser)

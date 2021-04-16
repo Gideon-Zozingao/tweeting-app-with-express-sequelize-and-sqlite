@@ -3,19 +3,102 @@
 <body>
 <%-include("../navAuth")%>
     <div class = "jumbotron">
-           <h1 class="text-center">Onzaec Tweets</h1>
+        <div class="conatiner">
+          <h3 class="text-center">Onzae Twits</h3>
+        </div>
   </div>
 <div class="container">
-<h1 class="text-muted">WELCOME</h1>
-<h3 class="text-sm">
-  This is the Members page
-</h3>
+<div class="row">
+  <div class="col-md-4">
+    <h1 class="text-muted">WELCOME</h1>
+    <h3 class="text-sm">
+      This is the Members page
+    </h3>
+  </div>
+  <div class="col-md-8">
+    <%
+    if(data){
+      for(let twit of data){%>
+        <div class="card border-primary mb-3" style="min-height:8rem">
+          <div class="card-body">
+            <p><span class="text-bold"><a href="
+              /user/<%=twit.User.username%>" class="text-muted"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
+           dateString = new Date(dateString).toUTCString();
+           dateString = dateString.split(' ').slice(0, 4).join(' ');
+
+              %><%=dateString%></i></p>
+              <p class=""><%=twit.twits%></p>
+
+          </div>
+          <div class="card-footer">
+  <a href="/twit/<%=twit.twitId%>"><i class="fa fa-info"></i> Details</a><% if(twit.User.username===user.user_name){%>
+  <span>
+    <button type="button" name="" class=" btn edit-link" accessKey="<%=twit.twitId%>" class=" btn edit-link"><i class="fa fa-edit"  ></i>Eit</button>
+
+    <button type="button" name="button" class=" btn delete-link" accessKey="<%=twit.twitId%>"><i class="fa fa-trash"  ></i> Delet</button>
+  </span>
+
+
+  <%}%>
+          </div>
+          </div>
+          <br>
+      <%}
+    }else{%>
+      <h4 class="text-muted text-center">No Twits Avalable Today</h4>
+      <p class="text-center">Be the first one to Twit now</p>
+    <%}
+    %>
+  </div>
+</div>
+
 </div>
 <%-include("../footer")%>
 <script type="text/javascript">
   const span = document.getElementsByClassName("close")[0];
   const modal = document.getElementById("myModal");
   const modalCont=document.querySelector(".modal-inner-content");
+
+    let deleteClass=document.querySelectorAll("span .delete-link");
+    //btn edit-link
+    let editClass=document.querySelectorAll("span .edit-link");
+
+    editClass.forEach(editBtn=>{
+      editBtn.addEventListener("click",()=>{
+        //console.log(`Edit: ${editBtn.accessKey}`)
+        const XHR=new XMLHttpRequest();
+        XHR.open("GET",`/editTwit/${editBtn.accessKey}`)
+        XHR.send();
+        XHR.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              modalCont.innerHTML=this.responseText;
+              showModal()
+
+          }else{
+              showModal()
+          }
+        }
+      })
+    })
+
+    deleteClass.forEach(delBtn=>{
+      delBtn.addEventListener("click",()=>{
+        console.log(`Edit: ${delBtn.accessKey}`)
+        const XHR=new XMLHttpRequest();
+        XHR.open("GET",`/deleteTwit/${delBtn.accessKey}`)
+        XHR.send();
+        XHR.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+              modalCont.innerHTML=this.responseText;
+              showModal()
+
+          }else{
+              showModal()
+          }
+        }
+      })
+    })
+
   const showModal=function(){
     modal.style.display = "block";
   }

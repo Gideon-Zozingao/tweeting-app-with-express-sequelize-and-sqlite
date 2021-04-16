@@ -6,7 +6,7 @@ exports.authenticateToken = (req, res, next) => {
   if (token == undefined) {
     res.render("pages/errors", {
       errorr: 402,
-      err_msg: "Acces Denied You are not logged in yet",
+      err_msg: "Acces Denied You You need to Sign In",
       user: token
     })
   } else {

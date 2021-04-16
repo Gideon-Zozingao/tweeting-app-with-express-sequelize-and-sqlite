@@ -4,16 +4,16 @@
 
     <div class="container">
 
-          <h3 class="text-center text-primary">Edit</h3>
+          <h3 class="text-center text-primary">Edit and Save</h3>
 
         <div class="card-body">
           <form class="" action="/editTwit" method="post" id="addTwit">
                 <div class="form-goup">
-                  <input type="hidden" name="twitId" value="<%=twitData.twitId%>">
+                  <input type="hidden" name="twit_id" value="<%=twitData.twitId%>">
                   <textarea name="twit" rows="7" cols="80" class="form-control"><%=twitData.twits%></textarea>
               </div>
               <div class="col-lg-6 login-btm login-button">
-                  <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Save</button>
+                  <button type="submit" class="btn btn-primary ">Save</button>
               </div>
           </form>
         </div>

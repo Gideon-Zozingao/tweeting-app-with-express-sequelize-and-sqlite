@@ -1,26 +1,9 @@
-
-    <div class="container">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="text-center text-primary">Twit Now</h3>
-        </div>
-        <div class="card-body">
+<p class="text-primary h5 text-center">Twit Now</p>
           <form class="" action="/add-twit" method="post" id="addTwit">
                 <div class="form-goup">
-                  <label for="twit">Twit Content</label>
                   <textarea name="twit" rows="7" cols="80" class="form-control"></textarea>
               </div>
               <div class="col-lg-6 login-btm login-button">
-                  <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Twit Now</button>
+                  <button type="submit" class="btn btn-outline-primary ">Twit Now</button>
               </div>
           </form>
-        </div>
-      </div>
-    </div>
-<script type="text/javascript">
-const addTwit=document.querySelector("#addTwit");
-addTwit.addEventListner("submit",(e)=>{
-  e.preventDefault()
-  alert("Posting a Twit Now??");
-})
-</script>
