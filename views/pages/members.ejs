@@ -25,22 +25,17 @@
               /user/<%=twit.User.username%>" class="text-muted"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
            dateString = new Date(dateString).toUTCString();
            dateString = dateString.split(' ').slice(0, 4).join(' ');
-
               %><%=dateString%></i></p>
               <p class=""><%=twit.twits%></p>
-
           </div>
           <div class="card-footer">
   <a href="/twit/<%=twit.twitId%>"><i class="fa fa-info"></i> Details</a><% if(twit.User.username===user.user_name){%>
   <span>
     <button type="button" name="" class=" btn edit-link" accessKey="<%=twit.twitId%>" class=" btn edit-link"><i class="fa fa-edit"  ></i>Eit</button>
-
     <button type="button" name="button" class=" btn delete-link" accessKey="<%=twit.twitId%>"><i class="fa fa-trash"  ></i> Delet</button>
   </span>
-
-
   <%}%>
-          </div>
+      </div>
           </div>
           <br>
       <%}
@@ -51,21 +46,16 @@
     %>
   </div>
 </div>
-
 </div>
 <%-include("../footer")%>
 <script type="text/javascript">
   const span = document.getElementsByClassName("close")[0];
   const modal = document.getElementById("myModal");
   const modalCont=document.querySelector(".modal-inner-content");
-
-    let deleteClass=document.querySelectorAll("span .delete-link");
-    //btn edit-link
-    let editClass=document.querySelectorAll("span .edit-link");
-
+  let deleteClass=document.querySelectorAll("span .delete-link");
+  let editClass=document.querySelectorAll("span .edit-link");
     editClass.forEach(editBtn=>{
       editBtn.addEventListener("click",()=>{
-        //console.log(`Edit: ${editBtn.accessKey}`)
         const XHR=new XMLHttpRequest();
         XHR.open("GET",`/editTwit/${editBtn.accessKey}`)
         XHR.send();
@@ -73,14 +63,12 @@
           if (this.readyState == 4 && this.status == 200) {
               modalCont.innerHTML=this.responseText;
               showModal()
-
           }else{
               showModal()
           }
         }
       })
     })
-
     deleteClass.forEach(delBtn=>{
       delBtn.addEventListener("click",()=>{
         console.log(`Edit: ${delBtn.accessKey}`)
@@ -91,22 +79,18 @@
           if (this.readyState == 4 && this.status == 200) {
               modalCont.innerHTML=this.responseText;
               showModal()
-
           }else{
               showModal()
           }
         }
       })
     })
-
   const showModal=function(){
     modal.style.display = "block";
   }
-
   const closeModal=function(){
     modal.style.display = "none";
   }
-
   const addTwits=document.getElementById("addTwits");
   addTwits.onclick=function(){
     let XHR=new XMLHttpRequest();
@@ -117,17 +101,15 @@
          modalCont.innerHTML=this.responseText;
          showModal();
        }else{
-         //  modalCont.innerHTML = this.readyState+ " "+this.status;
-         // showModal();
+         modalCont.innerHTML=this.responseText;
+         showModal();
        }
   }
   }
-  // When the user clicks on <span> (x), close the modal
   span.onclick = function(){
     modalCont.innerHTML="";
     closeModal();
   }
-  // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (event.target == modal) {
       modalCont.innerHTML="";

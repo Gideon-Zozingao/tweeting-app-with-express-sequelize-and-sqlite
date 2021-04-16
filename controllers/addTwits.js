@@ -5,11 +5,11 @@ const {
   Sequelize, Op
 } = require("sequelize")
 const models = require("../models/models")
-  //route handle for addTwits post request
+
+//route handle for addTwits post request
 exports.addTwits = async(req, res) => {
   const body = req.body
   const user = req.user
-  console.log(user.uid);
   if (body.twit == "") {
     res.render("pages/errors", {
       errorr: 400,
@@ -23,8 +23,6 @@ exports.addTwits = async(req, res) => {
       UserUserId: user.uid
     }).then((twit) => {
       if (twit) {
-        console.log(twit)
-          //
         res.redirect("/");
       } else {
         res.render("pages/errors", {
@@ -33,7 +31,6 @@ exports.addTwits = async(req, res) => {
         })
       }
     }).catch((error) => {
-      console.log(`Error: ${error}`)
       res.render("pages/errors", {
         errorr: 500,
         err_msg: `Twits Not Added ${error}`

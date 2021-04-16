@@ -28,8 +28,6 @@
 
   <button type="button" name="button" class=" btn delete-link" accessKey="<%=twit.twitId%>"><i class="fa fa-trash"  ></i> Delet</button>
 </span>
-
-
 <%}%>
         </div>
         </div>
@@ -79,20 +77,13 @@
         if (this.readyState == 4 && this.status == 200) {
             modalCont.innerHTML=this.responseText;
             showModal()
-
         }else{
+            modalCont.innerHTML=this.responseText;
             showModal()
         }
       }
     })
   })
-  // for(let i=0;i>deleteClass.length;i++){
-  //
-  //   deleteClass[i].onclick=function(){
-  //     console.log(deleteClass[i]);
-  //     alert(` Delet: ${deleteClass[i]}`);
-  //   }
-  // }
 
   const showModal=function(){
     modal.style.display = "block";

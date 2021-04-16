@@ -3,17 +3,14 @@
 <body>
 <%-include("../navAuth")%>
 
-    <div class = "jumbotron">
-           <h1 class="text-center">Onzaec Twits</h1>
-           <p class="text-center">Details for Twit</p>
-           <p class="text-center">
-
-           </p>
+  <div class = "jumbotron">
+      <h1 class="text-center">Onzaec Twits</h1>
+      <p class="text-center">Details for Twit</p
   </div>
 <div class="container">
-<p class="">
-  <%=twit.twits%>  <i><%=twit.createdAt%> </i>
-</p>
+  <p class="">
+      <%=twit.twits%>  <i><%=twit.createdAt%> </i>
+  </p>
 
 </div>
 <%-include("../footer")%>
@@ -24,11 +21,9 @@
   const showModal=function(){
     modal.style.display = "block";
   }
-
   const closeModal=function(){
     modal.style.display = "none";
   }
-
   const addTwits=document.getElementById("addTwits");
   addTwits.onclick=function(){
     let XHR=new XMLHttpRequest();
@@ -39,8 +34,8 @@
          modalCont.innerHTML=this.responseText;
          showModal();
        }else{
-         //  modalCont.innerHTML = this.readyState+ " "+this.status;
-         // showModal();
+          modalCont.innerHTML = this.responseText;
+         showModal();
        }
   }
   }

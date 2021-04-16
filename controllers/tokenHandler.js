@@ -4,16 +4,12 @@ const secretKey =
 exports.authenticateToken = (req, res, next) => {
   const token = req.cookies.Auth
   if (token == undefined) {
-    res.render("pages/errors", {
-      errorr: 402,
-      err_msg: "Acces Denied You You need to Sign In",
-      user: token
-    })
+    res.redirect("/user-login")
   } else {
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
         console.log(err)
-        res.render("pages/errors", {
+        res.redrec("pages/errors", {
           errorr: 403,
           err_msg: "Access Denied",
           user: token

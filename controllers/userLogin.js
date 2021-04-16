@@ -31,48 +31,39 @@ exports.userLogin = async(req, res) => {
     })
   } else {
     let user = await models.User.findOne({
-        where: {
-          [Op.and]: [{
-            username: username
-          }, {
-            password: password
-          }]
-        }
-      }).then((user) => {
-        if (!user) {
-          console.log(`Ivalid User Credentials`);
-          res.render("pages/errors", {
-            errorr: 404,
-            err_msg: "Invalid User Credentials"
-          });
-        } else {
-          // let jason_data = JSON.stringify(user)
-          // const user_data = JSON.parse(jason_data)
-          const curr_user = {
-            user_name: user.username,
-            uid: user.userId
-          };
-          const token = jwt.sign(curr_user, secretKey)
-          res.cookie('Auth', token, {
-            expires: new Date(Date.now() + 900000),
-            httpOnly: true
-          })
-          res.locals.user = curr_user;
-          res.redirect("/");
-          console.log(curr_user)
-          console.log(user)
-            //user
-          console.log(token)
-        }
-      }).catch((error) => {
-        console.log(`Error: ${error}`);
+      where: {
+        [Op.and]: [{
+          username: username
+        }, {
+          password: password
+        }]
+      }
+    }).then((user) => {
+      if (!user) {
         res.render("pages/errors", {
-          errorr: 500,
-          err_msg: "Your login request cannot be processed Now due to some technical errors. Try again agia later",
-          user: req.user
+          errorr: 404,
+          err_msg: "Invalid User Credentials"
         });
-      })
-      //res.redirect("/");
+      } else {
+        const curr_user = {
+          user_name: user.username,
+          uid: user.userId
+        };
+        const token = jwt.sign(curr_user, secretKey)
+        res.cookie('Auth', token, {
+          expires: new Date(Date.now() + 9000000),
+          httpOnly: true
+        })
+        res.locals.user = curr_user;
+        res.redirect("/");
+      }
+    }).catch((error) => {
+      res.render("pages/errors", {
+        errorr: 500,
+        err_msg: "Your login request cannot be processed Now due to some technical errors. Try again agia later",
+        user: req.user
+      });
+    })
   }
 
 }

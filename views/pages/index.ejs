@@ -76,8 +76,8 @@
 <br>
 <%-include("../footer")%>
 <script>
+  
 const modal = document.getElementById("myModal");
-
 const signup = document.getElementById("signup");
 // const signup_1=document.getElementById("signup-1");
 const signin=document.getElementById("signin");
@@ -101,21 +101,12 @@ const closeModal=function(){
         modalCont.innerHTML=this.responseText;
         showModal();
       }else{
+        modalCont.innerHTML=this.responseText;
+        showModal();
       }
+    }
  }
- }
- // signup_1.onclick = function(){
- //   let XHR=new XMLHttpRequest();
- //    XHR.open("GET", "/register", true);
- //   XHR.send()
- //   XHR.onreadystatechange =function(){
- //      if(this.readyState == 4 && this.status == 200) {
- //        modalCont.innerHTML=this.responseText;
- //        showModal();
- //      }else{
- //      }
- // }
- // }
+
  signin.onclick=function(){
      let XHR=new XMLHttpRequest();
      XHR.open("GET", "/user-login", true);
