@@ -55,6 +55,7 @@ exports.userLogin = async(req, res) => {
           httpOnly: true
         })
         res.locals.user = curr_user;
+
         res.redirect("/");
       }
     }).catch((error) => {

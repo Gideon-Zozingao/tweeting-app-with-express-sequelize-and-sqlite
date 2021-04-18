@@ -3,14 +3,17 @@ const secretKey =
 const jwt = require("jsonwebtoken")
 const models = require("../models/models")
 exports.homeRoute = async(req, res) => {
-  const auth = req.cookies.Auth;
+
+  let auth = req.cookies.Auth;
+  res.locals.user = req.user;
+  res.locals.auth = auth;
   const twiters = await models.User.findAndCountAll().then((twiters) => {
     let json_data = JSON.stringify(twiters);
     let twitors_count = JSON.parse(json_data)
     if (auth === undefined) {
       res.render('pages', {
-        twitors: twitors_count.count,
-        user: req.user
+        twitors: twitors_count.count
+          //user: req.user
       })
     } else {
       jwt.verify(auth, secretKey, (err, user) => {
@@ -20,6 +23,8 @@ exports.homeRoute = async(req, res) => {
             err_msg: "Access Denied"
           })
         } else {
+          req.user = user;
+          res.locals.user = user;
           const twits = models.Twits.findAll({
             include: models.User,
             order: [
@@ -28,16 +33,18 @@ exports.homeRoute = async(req, res) => {
             ]
           }).then((twits) => {
             if (twits.length > 0) {
-              req.user = user
+              console.log(req.user);
               res.render("pages/members", {
-                user: req.user,
+                user: res.locals.user,
                 data: twits
               })
-
             } else {
+
               res.render('pages/twits', {
+                user: res.locals.user,
                 data: ""
               });
+              console.log(res.locals.user);
             }
           }).catch((error) => {
             res.render("pages/errors", {

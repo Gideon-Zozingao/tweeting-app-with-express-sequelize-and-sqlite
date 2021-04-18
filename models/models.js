@@ -6,8 +6,6 @@ const {
 } = require('uuid');
 
 const sequelize = require('../db.js')
-
-
 class User extends Model {}
 User.init({
   userId: {
@@ -17,6 +15,30 @@ User.init({
     unique: true
   },
   username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: false
+  },
+  surName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: false
+  },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: true
+  },
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true

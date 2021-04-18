@@ -3,7 +3,7 @@ exports.viewTwits = async(req, res) => {
   let auth = req.cookies.Auth;
   res.locals.user = req.user;
   res.locals.auth = auth;
-
+  //console.log(req.user)
   const twits = await models.Twits.findAll({
     include: models.User,
     order: [
