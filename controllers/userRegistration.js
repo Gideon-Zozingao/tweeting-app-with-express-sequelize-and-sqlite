@@ -16,6 +16,7 @@ exports.registerUser = async(req, res) => {
   const uEmail = body.email;
   const uCountry = body.country;
   const confirmpass = body.cpassword;
+  const defaultAvata = './images/DefaultAvatar.jpg'
   if (userName === "" || password === "" || confirmpass === "" || firstName ==
     "" || surName == "" || uPhone == "" || uEmail == "" || uCountry == "") {
     res.render('pages/errors', {
@@ -72,7 +73,8 @@ exports.registerUser = async(req, res) => {
                     surName: surName,
                     country: uCountry,
                     phone: uPhone,
-                    email: uEmail
+                    email: uEmail,
+                    avata: defaultAvata
                   }).then((user) => {
                     console.log(user)
                     res.redirect("/")

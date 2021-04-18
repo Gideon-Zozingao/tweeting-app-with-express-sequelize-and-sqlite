@@ -1,8 +1,15 @@
 <title>Error>><%=errorr%></title>
 </head>
 <body>
+  <%if(locals.user){%>
+<%-include("../navAuth")%>
+<script type="text/javascript" src="./js/landing.js"></script>
+<script type="text/javascript" src="js/members.js"></script>
+<script type="text/javascript" src="./js/twits.js">
+  <%}else{%>
 <%-include("../nav")%>
-
+<script type="text/javascript" src="./js/landing.js"></script>
+  <%}%>
 <div class="container">
   <div class="jumbotron">
          <h1 class="text-center text-danger"><%=errorr%> Error</h1>

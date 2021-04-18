@@ -3,17 +3,19 @@
 <body>
 <%-include("../navAuth")%>
     <div class = "jumbotron">
-        <div class="conatiner">
-          <h3 class="text-center">Onzae Twits</h3>
-        </div>
   </div>
 <div class="container">
 <div class="row">
   <div class="col-md-4">
-    <h1 class="text-muted">WELCOME</h1>
+    <img src="<%=cuser.avata%>" alt="<%=cuser.name%> <%=cuser.surName%>" class="img-fluid rounded shadow-2-strong" style="max-height:12rem;min-height:12rem; min-width:15rem" >
+    <br>
+    <p class="" ><span class="fa fa-camera btn btn-fefault" id="activeAvata"></span>|
+      <span class="fa fa-info btn  btn-fefault" id="activeUserInfo"></span></p>
+    <hr>
     <h3 class="text-sm">
-      This is the Members page
+      <%=cuser.name%> <%=cuser.surName%>
     </h3>
+    <p><%=cuser.username%></p>
   </div>
   <div class="col-md-8">
     <%
@@ -21,8 +23,7 @@
       for(let twit of data){%>
         <div class="card border-primary mb-3" style="min-height:8rem">
           <div class="card-body">
-            <p><span class="text-bold"><a href="
-              /user/<%=twit.User.username%>" class="text-muted"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
+            <p><span class="text-bold "><a href="#/<%=twit.User.username%>" class="text-muted userlink"accessKey="<%=twit.User.userId%>"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
            dateString = new Date(dateString).toUTCString();
            dateString = dateString.split(' ').slice(0, 4).join(' ');
               %><%=dateString%></i></p>
@@ -48,72 +49,6 @@
 </div>
 </div>
 <%-include("../footer")%>
-<script type="text/javascript">
-  const span = document.getElementsByClassName("close")[0];
-  const modal = document.getElementById("myModal");
-  const modalCont=document.querySelector(".modal-inner-content");
-  let deleteClass=document.querySelectorAll("span .delete-link");
-  let editClass=document.querySelectorAll("span .edit-link");
-    editClass.forEach(editBtn=>{
-      editBtn.addEventListener("click",()=>{
-        const XHR=new XMLHttpRequest();
-        XHR.open("GET",`/editTwit/${editBtn.accessKey}`)
-        XHR.send();
-        XHR.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              modalCont.innerHTML=this.responseText;
-              showModal()
-          }else{
-              showModal()
-          }
-        }
-      })
-    })
-    deleteClass.forEach(delBtn=>{
-      delBtn.addEventListener("click",()=>{
-        console.log(`Edit: ${delBtn.accessKey}`)
-        const XHR=new XMLHttpRequest();
-        XHR.open("GET",`/deleteTwit/${delBtn.accessKey}`)
-        XHR.send();
-        XHR.onreadystatechange = function(){
-          if (this.readyState == 4 && this.status == 200) {
-              modalCont.innerHTML=this.responseText;
-              showModal()
-          }else{
-              showModal()
-          }
-        }
-      })
-    })
-  const showModal=function(){
-    modal.style.display = "block";
-  }
-  const closeModal=function(){
-    modal.style.display = "none";
-  }
-  const addTwits=document.getElementById("addTwits");
-  addTwits.onclick=function(){
-    let XHR=new XMLHttpRequest();
-     XHR.open("GET", "/add-twit", true);
-    XHR.send()
-    XHR.onreadystatechange =function(){
-       if(this.readyState == 4 && this.status == 200) {
-         modalCont.innerHTML=this.responseText;
-         showModal();
-       }else{
-         modalCont.innerHTML=this.responseText;
-         showModal();
-       }
-  }
-  }
-  span.onclick = function(){
-    modalCont.innerHTML="";
-    closeModal();
-  }
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modalCont.innerHTML="";
-       closeModal();
-    }
-  }
+<script type="text/javascript" src="js/members.js">
+
 </script>

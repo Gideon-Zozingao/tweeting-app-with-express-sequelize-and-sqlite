@@ -1,12 +1,11 @@
 const jwt = require("jsonwebtoken")
-const secretKey =
-  "88EDD9DF1936988138D5BFB0E045AD2C298F47B6BF1D8CEBDB3E915125FDDBEBCC304F0C7380BDEA9C9D1876EF324D6D6AFEBB066BB964A60781E4EAFE3A2FB5"
+const secretKey = require('../config/config.js')
 exports.authenticateToken = (req, res, next) => {
   const token = req.cookies.Auth
   if (token == undefined) {
     res.redirect("/user-login")
   } else {
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token, secretKey.secretKey, (err, user) => {
       if (err) {
         console.log(err)
         res.redrec("pages/errors", {

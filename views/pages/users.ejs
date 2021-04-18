@@ -1,59 +1,43 @@
+
 <title>Onzaec Twits>> Users</title>
 </head>
 <body>
-
 <%-include("../navAuth")%>
     <div class = "jumbotron">
-           <h1 class="text-center">Onzaec Tweets</h1>
-           <p class="text-center">Active Users</p>
-
   </div>
 <div class="container">
-<p class="text-sm">
+<div class="row">
+<div class="cold-5 ">
+  <h6>Active Users</h6>
+  <div class="user-thumnails">
   <% for( let u of data){%>
-  <p><%=u.name%> <%=u.surName%> <%=u.username%> <span><a href="
-    /user/<%=u.username%>">Details</a></span></p>
+    <div class="card border-primary mb-3" >
+      <div class="card-body">
+        <a class="ripple" href="#<%=u.surName%>">
+  <img alt="<%=u.name%> <%=u.surName%>"
+    class="img-fluid rounded shadow-2-strong " style="max-height:12rem; max-width:8rem"
+    src="<%=u.avata%>"/>
+</a>
+<br>
+        <p class="text-center h5"><%=u.name%> <%=u.surName%></p>
+        <p class="text-center">
+          <%=u.country%>
+        </p>
+          <span><a href="/user/<%=u.username%>">Profile</a> </span>|<span class="userProfile btn" accesskey="<%=u.userId%>">Details</span>
+      </div>
+    </div>
+    <br>
   <%}%>
-
 </div>
+</div>
+<div class="col-md-8" id="user-delaits">
+<h3 class="text-center">
+  People from All Arround have registered in here</h3>
+<p class="text-center">Click their profile to view thier details</p></div>
+</div>
+  </div>
+<br>
 <%-include("../footer")%>
-<script type="text/javascript">
-  const span = document.getElementsByClassName("close")[0];
-  const modal = document.getElementById("myModal");
-  const modalCont=document.querySelector(".modal-inner-content");
-  const showModal=function(){
-    modal.style.display = "block";
-  }
+<script type="text/javascript" src="./js/users.js">
 
-  const closeModal=function(){
-    modal.style.display = "none";
-  }
-
-  const addTwits=document.getElementById("addTwits");
-  addTwits.onclick=function(){
-    let XHR=new XMLHttpRequest();
-     XHR.open("GET", "/add-twit", true);
-    XHR.send()
-    XHR.onreadystatechange =function(){
-       if(this.readyState == 4 && this.status == 200) {
-         modalCont.innerHTML=this.responseText;
-         showModal();
-       }else{
-         modalCont.innerHTML=this.responseText;
-         showModal();
-       }
-  }
-  }
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function(){
-    modalCont.innerHTML="";
-    closeModal();
-  }
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modalCont.innerHTML="";
-       closeModal();
-    }
-  }
 </script>

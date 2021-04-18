@@ -1,9 +1,7 @@
-const secretKey =
-  "88EDD9DF1936988138D5BFB0E045AD2C298F47B6BF1D8CEBDB3E915125FDDBEBCC304F0C7380BDEA9C9D1876EF324D6D6AFEBB066BB964A60781E4EAFE3A2FB5";
+const secretKey = require('../config/config.js')
 const jwt = require("jsonwebtoken")
 const models = require("../models/models")
 exports.homeRoute = async(req, res) => {
-
   let auth = req.cookies.Auth;
   res.locals.user = req.user;
   res.locals.auth = auth;
@@ -13,10 +11,9 @@ exports.homeRoute = async(req, res) => {
     if (auth === undefined) {
       res.render('pages', {
         twitors: twitors_count.count
-          //user: req.user
       })
     } else {
-      jwt.verify(auth, secretKey, (err, user) => {
+      jwt.verify(auth, secretKey.secretKey, (err, user) => {
         if (err) {
           res.render("pages/errors", {
             errorr: 403,
@@ -33,18 +30,23 @@ exports.homeRoute = async(req, res) => {
             ]
           }).then((twits) => {
             if (twits.length > 0) {
-              console.log(req.user);
-              res.render("pages/members", {
-                user: res.locals.user,
-                data: twits
+              const cUser = models.User.findOne({
+                where: {
+                  username: req.user.user_name
+                }
+              }).then((cUser) => {
+                res.render("pages/members", {
+                  user: res.locals.user,
+                  data: twits,
+                  cuser: cUser
+                })
               })
-            } else {
 
-              res.render('pages/twits', {
+            } else {
+              res.render('pages/members', {
                 user: res.locals.user,
                 data: ""
               });
-              console.log(res.locals.user);
             }
           }).catch((error) => {
             res.render("pages/errors", {

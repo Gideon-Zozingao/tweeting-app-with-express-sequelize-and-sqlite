@@ -4,6 +4,7 @@ const controllers = require("./controllers/controllers");
 
 //home route
 router.get('/', controllers.homeRoute)
+router.post('/', controllers.homeRoute)
 
 //gte user login page
 router.get("/user-login", controllers.login)
@@ -14,7 +15,11 @@ router.post("/login", controllers.userLogin)
 //view Twits
 router.get("/twits", controllers.authenticateToken, controllers.viewTwits)
 
-// posting Twits
+
+//view Twits
+router.get("/changerAvata", controllers.authenticateToken, controllers.uploadAvata)
+router.post("/uploadAvata", controllers.authenticateToken, controllers.updateAvata)
+  // posting Twits
 router.post("/add-twit", controllers.authenticateToken, controllers.addTwits)
   //recive post request fro registration of new users and process them
 router.post("/register", controllers.registerUser)
@@ -41,6 +46,7 @@ router.get("/register", controllers.createUser)
 router.get("/users", controllers.authenticateToken, controllers.viewUser)
 
 router.get("/user/:user_name", controllers.authenticateToken, controllers.userDetails)
+router.get("/userDetails/:user_id", controllers.authenticateToken, controllers.userDetailsSnickPic)
 
 //handels logoute request
 router.get("/logout", controllers.logout)

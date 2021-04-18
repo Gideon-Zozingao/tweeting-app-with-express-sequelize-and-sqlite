@@ -1,6 +1,5 @@
 //secret key for JWT Token Varification
-const secretKey =
-  "88EDD9DF1936988138D5BFB0E045AD2C298F47B6BF1D8CEBDB3E915125FDDBEBCC304F0C7380BDEA9C9D1876EF324D6D6AFEBB066BB964A60781E4EAFE3A2FB5"
+const secretKey = require('../config/config.js')
   //inports sequelize library
 const {
   Sequelize, Op
@@ -13,10 +12,7 @@ const {
 const jwt = require("jsonwebtoken")
   //imports the models module
 const models = require("../models/models")
-  //importing server sonfigartion modul
-const config = require("../config/config")
-
-//user login controller function
+  //user login controller function
 exports.userLogin = async(req, res) => {
   let auth = req.cookies.Auth;
   res.locals.user = req.user;
@@ -49,7 +45,7 @@ exports.userLogin = async(req, res) => {
           user_name: user.username,
           uid: user.userId
         };
-        const token = jwt.sign(curr_user, secretKey)
+        const token = jwt.sign(curr_user, secretKey.secretKey)
         res.cookie('Auth', token, {
           expires: new Date(Date.now() + 9000000),
           httpOnly: true
@@ -59,6 +55,7 @@ exports.userLogin = async(req, res) => {
         res.redirect("/");
       }
     }).catch((error) => {
+      console.log(error)
       res.render("pages/errors", {
         errorr: 500,
         err_msg: "Your login request cannot be processed Now due to some technical errors. Try again agia later",
