@@ -2,6 +2,30 @@ const span = document.getElementsByClassName("close")[0];
 const modal = document.getElementById("myModal");
 const modalCont = document.querySelector(".modal-inner-content");
 const userProfile = document.querySelectorAll(".userProfile");
+const userThumbnails = document.querySelector(".user-thumnails");
+const closeSide = document.querySelector("#close-side")
+const openSide = document.querySelector("#open-side")
+
+const showSection = (section) => {
+  section.style.display = "block"
+}
+const closeSection = (section) => {
+  section.style.display = "";
+}
+openSide.onclick = () => {
+  closeSection(openSide)
+  showSection(userThumbnails);
+  showSection(closeSide)
+}
+closeSide.onclick = () => {
+  closeSection(closeSide)
+  closeSection(userThumbnails);
+  showSection(openSide)
+
+}
+
+
+
 userProfile.forEach(user => {
   user.onclick = function() {
     var key = user.accessKey

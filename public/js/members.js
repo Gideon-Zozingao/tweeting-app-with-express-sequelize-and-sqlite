@@ -6,6 +6,28 @@ let editClass = document.querySelectorAll("span .edit-link");
 let activeAvata = document.querySelector("#activeAvata");
 let activeUserInfo = document.querySelector("#activeUserInfo");
 let userLink = document.querySelectorAll(".userlink");
+const activeUserProfile = document.querySelector(".active-user-profile");
+const closeSide = document.querySelector("#close-side")
+const openSide = document.querySelector("#open-side")
+
+const showSection = (section) => {
+  section.style.display = "block"
+}
+const closeSection = (section) => {
+  section.style.display = "none";
+}
+openSide.onclick = () => {
+  openSide.style.display = "none"
+  showSection(activeUserProfile);
+  closeSide.style.display = "block"
+}
+closeSide.onclick = () => {
+  closeSection(closeSide)
+  closeSection(activeUserProfile);
+
+  showSection(openSide)
+
+}
 
 userLink.forEach(u => {
   u.onclick = function(e) {

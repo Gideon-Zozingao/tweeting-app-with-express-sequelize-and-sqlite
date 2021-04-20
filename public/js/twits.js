@@ -1,10 +1,32 @@
 const span = document.getElementsByClassName("close")[0];
 const modal = document.getElementById("myModal");
 const modalCont = document.querySelector(".modal-inner-content");
-
+let userLink = document.querySelectorAll(".userlink");
 let deleteClass = document.querySelectorAll("span .delete-link");
 //btn edit-link
 let editClass = document.querySelectorAll("span .edit-link");
+
+
+userLink.forEach(u => {
+  u.onclick = function(e) {
+    var key = u.accessKey
+      //let userDetalits = document.querySelector("#user-delaits")
+    let XHR = new XMLHttpRequest();
+    XHR.open("GET", `/userDetails/${key}`)
+    XHR.send();
+    XHR.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          modalCont.innerHTML = this.responseText;
+          showModal()
+        } else {
+
+        }
+      }
+      // alert(key)
+      //e.preventDefault()
+
+  }
+})
 
 editClass.forEach(editBtn => {
   editBtn.addEventListener("click", () => {

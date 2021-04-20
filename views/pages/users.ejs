@@ -6,12 +6,14 @@
     <div class = "jumbotron">
   </div>
 <div class="container">
-<div class="row">
-<div class="cold-5 ">
-  <h6>Active Users</h6>
-  <div class="user-thumnails">
+<div class="row-1 " id="users-page-view">
+<div class="side-toggles rounded-circle"">
+<h1 class="text-center"><span class="fa fa-angle-double-right" id="open-side"></span><span class="fa fa-angle-double-left" id="close-side"></span></h1>
+</div>
+<div class="user-thumnails" id="">
+  <div class="">
   <% for( let u of data){%>
-    <div class="card border-primary mb-3" >
+    <div class="card border-primary mb-3 user-thumb" >
       <div class="card-body">
         <a class="ripple" href="#<%=u.surName%>">
   <img alt="<%=u.name%> <%=u.surName%>"
@@ -26,7 +28,6 @@
           <span><a href="/user/<%=u.username%>">Profile</a> </span>|<span class="userProfile btn" accesskey="<%=u.userId%>">Details</span>
       </div>
     </div>
-    <br>
   <%}%>
 </div>
 </div>
@@ -39,5 +40,4 @@
 <br>
 <%-include("../footer")%>
 <script type="text/javascript" src="./js/users.js">
-
 </script>

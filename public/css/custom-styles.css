@@ -3,7 +3,7 @@
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   padding-top: 100px;
   left: 0;
   top: 0;
@@ -41,3 +41,117 @@
   overflow-y: scroll;
   padding: 3px;
 }
+/*
+Customizing the Scrollar for the thumnails
+*/
+
+.user-thumnails::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+}
+
+
+
+.user-thumnails::-webkit-scrollbar-track {
+  width: 8px;
+  background: #f1f1f1;
+
+
+}
+
+.side-toggles{
+  position: fixed;
+  left: 0;
+  top: 1;
+  width: 50px;
+  background-color: black;
+  box-shadow: 1px 3px 14px 12px rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50px;
+
+  z-index: 2;
+}
+
+#close-side:hover,#open-side:hover{
+cursor: pointer;
+color: blue;
+}
+.user-thumnails::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 109, 255, 0.81);
+
+  width: 8px;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.user-thumnails::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  cursor: pointer;
+}
+.row-1{
+  display: flex;
+  flex-direction: row;
+
+}
+.user-thumb{
+  display: block;
+ width: 100%;
+}
+.user-thumnails{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+#close-side{
+  display: none;
+}
+
+.active-user-profile{
+   display: block ;
+}
+@media screen  and (max-width: 760px){
+  #users-page-view{
+  display: flex !important;
+  flex-direction: column !important;
+  }
+  .side-toggles{
+    left: 0;
+    display: block !important;
+  }
+  .user-thumnails{
+    box-shadow: 1px 3px 14px 12px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 2;
+    width: 45%;
+    left: 0;
+    z-index: 1;
+    display: none;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+.user-thumb{
+width: 100%;
+}
+  .row-1{
+    display: flex;
+    flex-direction: column !important;
+
+  }
+
+  .active-user-profile{
+    position: fixed;
+    left: 0;
+    display: none;
+    z-index: 1;
+    background-color: grey;
+    height: 100%;
+    color: white;
+    width: 50%;
+    top: 0.1;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+  }
+   }

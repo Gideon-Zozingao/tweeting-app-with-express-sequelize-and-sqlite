@@ -5,12 +5,17 @@
     <div class = "jumbotron">
   </div>
 <div class="container">
-<div class="row">
-  <div class="col-md-4">
+  <div class="side-toggles rounded-circle"">
+  <h1 class="text-center"><span class="fa fa-angle-double-right" id="open-side"></span><span class="fa fa-angle-double-left" id="close-side"></span></h1>
+  </div>
+<div class="row-1">
+  <div class="col-md-4 active-user-profile">
     <img src="<%=cuser.avata%>" alt="<%=cuser.name%> <%=cuser.surName%>" class="img-fluid rounded shadow-2-strong" style="max-height:12rem;min-height:12rem; min-width:15rem" >
-    <br>
-    <p class="" ><span class="fa fa-camera btn btn-fefault" id="activeAvata"></span>|
-      <span class="fa fa-info btn  btn-fefault" id="activeUserInfo"></span></p>
+    <br
+
+      <p class="" ><span class="fa fa-camera btn btn-fefault" id="activeAvata"></span>|
+        <span class="fa fa-info btn  btn-fefault" id="activeUserInfo"></span></p>
+
     <hr>
     <h3 class="text-sm">
       <%=cuser.name%> <%=cuser.surName%>
@@ -23,7 +28,7 @@
       for(let twit of data){%>
         <div class="card border-primary mb-3" style="min-height:8rem">
           <div class="card-body">
-            <p><span class="text-bold "><a href="#/<%=twit.User.username%>" class="text-muted userlink"accessKey="<%=twit.User.userId%>"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
+            <p><span class="text-bold "><a href="#/<%=twit.User.username%>" class="text-muted userlink" accessKey="<%=twit.User.userId%>"><%=twit.User.username%></a ></span>  @ <i class="text-muted"><% var dateString = twit.createdAt
            dateString = new Date(dateString).toUTCString();
            dateString = dateString.split(' ').slice(0, 4).join(' ');
               %><%=dateString%></i></p>
