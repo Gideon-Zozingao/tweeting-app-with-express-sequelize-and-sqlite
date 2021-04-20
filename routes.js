@@ -44,11 +44,10 @@ router.get("/deleteTwit/:twit_id", controllers.authenticateToken, controllers.de
 router.get("/register", controllers.createUser)
   // View the  Active users
 router.get("/users", controllers.authenticateToken, controllers.viewUser)
-
 router.get("/user/:user_name", controllers.authenticateToken, controllers.userDetails)
 router.get("/userDetails/:user_id", controllers.authenticateToken, controllers.userDetailsSnickPic)
-
-//handels logoute request
+router.get("/about", controllers.goToAbout)
+  //handels logoute request
 router.get("/logout", controllers.logout)
   //bad get requests get captured here
 router.get('*', controllers.invalidGetRequest)
