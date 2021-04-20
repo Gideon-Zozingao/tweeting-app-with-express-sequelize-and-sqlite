@@ -6,12 +6,38 @@ exports.userDetails = async(req, res) => {
     }
   }).then((user) => {
     if (user) {
-      res.render("pages/user", {
-        user_data: user,
-        user: req.user
+      models.Twits.findAll({
+        include: models.User,
+        where: {
+          UserUserId: user.userId
+        },
+
+        order: [
+          ['createdAt', 'DESC'],
+          ["updatedAt", "DESC"]
+        ]
+      }).then((twits) => {
+        if (twits) {
+          res.render("pages/user", {
+            user_data: user,
+            user: req.user,
+            twit_data: twits
+          })
+        } else {
+          res.render("pages/user", {
+            user_data: user,
+            user: req.user,
+            twit_data: ""
+          })
+        }
+      }).catch((error) => {
+        res.render("pages/errors", {
+          errorr: 500,
+          err_msg: "We could not Process Your request Due to Some Internal Issues. Please Tray Again Later;"
+        })
       })
+
     } else {
-      console.log("User does not exist")
       res.render("pages/errors", {
         errorr: 404,
         err_msg: "User You have looked for does not exist"

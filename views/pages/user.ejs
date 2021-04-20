@@ -10,16 +10,37 @@
             <img src="../<%=user_data.avata%>" alt="<%=user_data.name%> <%=user_data.surName%>" class="img-thumbnail float-left"  style="max-width:12rem;">
           </div>
         </div>
-
-      <div class="col-md-8 text-left">
-
+      <div class="col-md-8 text-left float-left">
         <h1 class=""><%=user_data.name%> <%=user_data.surName%></h1>
         <p class="">Username:<%=user_data.username%></p>
         <h5 class=""><%=user_data.country%></h5>
+        <hr>
+        <p><%=user_data.phone%> | <%=user_data.email%></p>
       </div>
     </div>
   </div>
   <div class="container">
+    <%if(twit_data!==""){%>
+      <h5>Twits from <%=user_data.username%></h5>
+        <%for(let twit of twit_data){%>
+            <div class="card">
+            <div class="card-body">
+
+              <% var dateString = twit.createdAt
+             dateString = new Date(dateString).toUTCString();
+             dateString = dateString.split(' ').slice(0, 4).join(' ');
+
+                %>
+              <p><%=twit.User.username%> |@<i><%=dateString%></i></p>
+              <hr>
+              <p class="h5"><%=twit.twits%></p>
+            </div>
+            </div>
+            <br/>
+            <%}
+          }else{%>
+              <h4>No twits recieved from <%=user_data.username%></h4>
+        <%}%>
   </div>
 <%-include("../footer")%>
 <script type="text/javascript" src="../js/user.js">
