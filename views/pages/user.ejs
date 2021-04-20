@@ -4,7 +4,20 @@
 <body>
   <%-include("../navAuth")%>
     <div class = "jumbotron">
-           <h1 class="text-center"><%=user_data.username%></h1>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="avata">
+            <img src="../<%=user_data.avata%>" alt="<%=user_data.name%> <%=user_data.surName%>" class="img-thumbnail float-left"  style="max-width:12rem;">
+          </div>
+        </div>
+
+      <div class="col-md-8 text-left">
+
+        <h1 class=""><%=user_data.name%> <%=user_data.surName%></h1>
+        <p class="">Username:<%=user_data.username%></p>
+        <h5 class=""><%=user_data.country%></h5>
+      </div>
+    </div>
   </div>
   <div class="container">
   </div>

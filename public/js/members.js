@@ -9,7 +9,6 @@ let userLink = document.querySelectorAll(".userlink");
 const activeUserProfile = document.querySelector(".active-user-profile");
 const closeSide = document.querySelector("#close-side")
 const openSide = document.querySelector("#open-side")
-
 const showSection = (section) => {
   section.style.display = "block"
 }
