@@ -3,7 +3,7 @@
 ## An CRUD Application with Express JS EJS Templating Engine Seqeulize ORM and SQlite Database.
 
 ### Aim of this Project.
- 1. Understanding  Node.js and Express Framework We DEVELOPEMENT
+ 1. Understanding  Node.js and Express Framework Web Development.
  2. Uderstanding  CRUD Application Development with Node.js and Express with Sequelize Oject Reltional Modeling (ORM).
  3. Understanding the Use of Express Templating Engines (EJS)  for dynamic Data rendering.
  4. Understandin the Use of JSON We Token in Passing token between CLIENT and server and Authentiction of Sessions with JWT Tokens.
