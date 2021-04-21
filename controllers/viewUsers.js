@@ -1,8 +1,6 @@
 const models = require("../models/models")
 exports.viewUser = (req, res) => {
-
   let user = models.User.findAll().then((user) => {
-    console.log(user)
     res.render('pages/users', {
       data: user,
       user: req.user
