@@ -64,7 +64,7 @@ Customizing the Scrollar for the thumnails
   left: 0;
   top: 1;
   width: 50px;
-  background-color: black;
+  background-color: rgba(137, 196, 244, 1);
   box-shadow: 1px 3px 14px 12px rgba(0, 0, 0, 0.5);
   color: white;
   border-radius: 50px;

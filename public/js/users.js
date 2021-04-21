@@ -13,7 +13,7 @@ const closeSection = (section) => {
   section.style.display = "";
 }
 openSide.onclick = () => {
-  closeSection(openSide)
+  openSide.style.display = "none";
   showSection(userThumbnails);
   showSection(closeSide)
 }
