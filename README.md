@@ -8,7 +8,7 @@
  3. Understanding the Use of Express Templating Engines (EJS)  for dynamic Data rendering.
  4. Understandin the Use of JSON We Token in Passing token between CLIENT and server and Authentiction of Sessions with JWT Tokens.
 
-### Functionaalities of the Application.
+### Functionalities of the Application.
  1. User Registration
  2. User Login and Authentication and accessing of authorised User section.
  3. Twit Content Creation by registered and loged in User.
@@ -29,4 +29,3 @@
   14. sqlite3: v5.0.2
   15. uuid: v3.4.0
 
-  
