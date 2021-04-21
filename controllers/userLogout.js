@@ -9,7 +9,6 @@ exports.logout = (req, res) => {
       expires: new Date(Date.now() - 900000)
     })
     res.redirect('/');
-    console.log(`Sessions Token : ${auth} destroyed and User loged out`)
   }
 
 }

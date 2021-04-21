@@ -29,3 +29,6 @@
   14. sqlite3: v5.0.2
   15. uuid: v3.4.0
 
+### Project Repository
+  https://github.com/Gideon-Zozingao/tweeting-app-with-express-sequelize-and-sqlite.git
+
